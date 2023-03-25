@@ -10,3 +10,4 @@
 /.idea/vcs.xml
 /.idea/workspace.xml
 /data/raw/yschmitzz_gtfs.zip
+.env
