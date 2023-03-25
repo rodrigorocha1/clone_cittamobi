@@ -1,0 +1,12 @@
+/data/raw/agency.txt
+/data/raw/calendar.txt
+/data/raw/fare_attributes.txt
+/data/raw/fare_rules.txt
+/data/raw/frequencies.txt
+/data/raw/shapes.txt
+/data/raw/stop_times.txt
+/data/raw/stops.txt
+/data/raw/trips.txt
+/.idea/vcs.xml
+/.idea/workspace.xml
+/data/raw/yschmitzz_gtfs.zip
