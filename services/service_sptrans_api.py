@@ -4,7 +4,7 @@ import requests
 class ServiceSPTRANSAPI:
     def __init__(self):
         self.__url_base = 'http://api.olhovivo.sptrans.com.br/v2.1'
-        self.__token = 'dbe79ea5ae8f7d2cc7dadb670875a5a00c8b4579a5baabbdc6d53e6dd2dfb219'
+        self.__token = ''
         self.__s = requests.session()
 
     def requests_api(self, path='/Login/Autenticar?token=', req='POST'):
