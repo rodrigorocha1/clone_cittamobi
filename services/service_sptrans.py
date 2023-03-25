@@ -2,6 +2,7 @@ from entidades.linhas import Linha
 from services.service_sptrans_api import ServiceSPTRANSAPI
 from entidades.parada import Parada
 from typing import List
+from entidades.onibus import Onibus
 
 
 class ServiceSPTRANS:
@@ -27,6 +28,19 @@ class ServiceSPTRANS:
             req = self.__sptrans_api.requests_api(path, 'GET')
             return [Parada(p) for p in req]
 
+    def buscar_posicoes_veiculos(self, id_linha: int) -> List[Onibus]:
+        path = '/Posicao/Linha?codigoLinha=' + str(id_linha)
+        if self.__login():
+            req = self.__sptrans_api.requests_api(path, 'GET')
+            req = req['vs']
+
+            return [Onibus(p) for p in req]
+
+
+
+
+
+
 
 if __name__ == '__main__':
     ss = ServiceSPTRANS()
@@ -41,4 +55,14 @@ if __name__ == '__main__':
         print(parada.posicao.latitude)
         print(parada.posicao.longitude)
 
+        print('--------------------')
+    print('--------------------')
+    print('--------------------')
+    lista_posicoes_onibus = ss.buscar_posicoes_veiculos(a[0].codigo_identificador)
+    print(lista_posicoes_onibus)
+    for onibus in lista_posicoes_onibus:
+        print(onibus.prefixo)
+        print(onibus.acessibiliade)
+        print(onibus.posicao.latitude)
+        print(onibus.posicao.latitude)
         print('--------------------')
