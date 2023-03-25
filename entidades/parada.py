@@ -10,7 +10,7 @@ class Parada:
         self.__linhas = []
 
     @property
-    def posicao(self):
+    def posicao(self) -> Posicao:
         return self.posicao
 
     def adicionar_linha(self, linha: Linha):
@@ -19,5 +19,3 @@ class Parada:
     def mostrar_linha(self):
         for linha in self.__linhas:
             print(linha)
-
-

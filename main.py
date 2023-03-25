@@ -11,4 +11,3 @@ l.adicionar_onibus(o1)
 l.adicionar_onibus(o2)
 l.mostrar_relacao_onibus()
 p = Parada(codigo_parada=1, endereco_localizacao='1', posicao=posicao)
-
