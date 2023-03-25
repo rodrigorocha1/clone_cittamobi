@@ -15,8 +15,6 @@ class ServiceSPTRANS:
         path = '/Linha/Buscar?termosBusca=' + termo_busca
         if self.__login():
             req = self.__sptrans_api.requests_api(path, 'GET')
-            print(req)
-
             return [Linha(linha) for linha in req]
         else:
             pass
