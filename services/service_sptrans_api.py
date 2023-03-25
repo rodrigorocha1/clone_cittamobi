@@ -1,10 +1,13 @@
 import requests
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 
 class ServiceSPTRANSAPI:
     def __init__(self):
         self.__url_base = 'http://api.olhovivo.sptrans.com.br/v2.1'
-        self.__token = ''
+        self.__token = os.environ['key']
         self.__s = requests.session()
 
     def requests_api(self, path='/Login/Autenticar?token=', req='POST'):
