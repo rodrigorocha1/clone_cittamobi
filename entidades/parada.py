@@ -1,17 +1,19 @@
 from entidades.posicao import Posicao
 from entidades.linhas import Linha
+from entidades.posicao import Posicao
 
 
 class Parada:
-    def __init__(self, codigo_parada: int, endereco_localizacao: str, posicao: Posicao):
-        self.endereco_localizacao = endereco_localizacao
-        self.codigo_parada = codigo_parada
-        self._posicao = posicao
+    def __init__(self, json_parada):
+        self.endereco_localizacao = json_parada['ed']
+        self.codigo_parada = json_parada['cp']
+        self.nome_parada = json_parada['np']
+        self._posicao = Posicao(json_parada['px'], json_parada['py'])
         self.__linhas = []
 
     @property
     def posicao(self) -> Posicao:
-        return self.posicao
+        return self._posicao
 
     def adicionar_linha(self, linha: Linha):
         self.__linhas.append(linha)
