@@ -37,11 +37,6 @@ class ServiceSPTRANS:
             return [Onibus(p) for p in req]
 
 
-
-
-
-
-
 if __name__ == '__main__':
     ss = ServiceSPTRANS()
     a = ss.consultar_linha('8000')
