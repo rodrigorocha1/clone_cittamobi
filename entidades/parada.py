@@ -1,23 +1,25 @@
 from entidades.posicao import Posicao
 from entidades.linhas import Linha
 from entidades.posicao import Posicao
+from typing import Dict, List
+from entidades.onibus import Onibus
 
 
 class Parada:
-    def __init__(self, json_parada):
-        self.endereco_localizacao = json_parada['ed']
-        self.codigo_parada = json_parada['cp']
-        self.nome_parada = json_parada['np']
+    def __init__(self, json_parada: Dict):
+        self.endereco_localizacao = json_parada['ed'] if json_parada.get('ed') is not None else None
+        self.codigo_parada = json_parada['cp'] if json_parada.get('cp') is not None else None
+        self.nome_parada = json_parada['np'] if json_parada.get('np') is not None else None
         self._posicao = Posicao(json_parada['px'], json_parada['py'])
-        self.__linhas = []
+        self.__onibus = []
 
     @property
     def posicao(self) -> Posicao:
         return self._posicao
 
-    def adicionar_linha(self, linha: Linha):
-        self.__linhas.append(linha)
+    def adicionar_onibus(self, onibus: Onibus):
+        self.__onibus.append(onibus)
 
-    def mostrar_linha(self):
-        for linha in self.__linhas:
-            print(linha)
+    @property
+    def mostrar_onibus(self):
+        return self.__onibus
