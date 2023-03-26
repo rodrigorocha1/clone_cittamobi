@@ -3,6 +3,7 @@ from services.service_sptrans_api import ServiceSPTRANSAPI
 from entidades.parada import Parada
 from typing import List
 from entidades.onibus import Onibus
+import folium
 
 
 class ServiceSPTRANS:
@@ -44,7 +45,6 @@ class ServiceSPTRANS:
             for parada in req['ps']:
                 p = Parada(parada)
                 for onibus in parada['vs']:
-
                     print(onibus)
                     onibus = Onibus(onibus)
                     p.adicionar_onibus(onibus)
@@ -58,35 +58,18 @@ class ServiceSPTRANS:
 
 if __name__ == '__main__':
     ss = ServiceSPTRANS()
-    # a = ss.consultar_linha('8000')
-    # print(a[0])
-    # a = a[0].codigo_identificador
-    # lista_paradas = ss.buscar_paradas(a[0].codigo_identificador)
+    linhas = ss.consultar_linha('6055-10')
+    print(linhas)
+    for linha in linhas:
+        print(linha.codigo_identificador)
 
-    lista_paradas = ss.buscar_previsao_chegada(33914)
+    for linha in linhas:
+        lista_paradas = ss.buscar_paradas(linha.codigo_identificador)
+    print(lista_paradas)
 
+    mapa_parada = folium.Map(location=[-23.702749, -46.701907], zoom_start=12)
     for parada in lista_paradas:
-        print(parada.nome_parada)
-        print(parada.codigo_parada)
-        for onibus in parada.mostrar_onibus:
-            print(onibus.prefixo)
-        print('=====================')
-
-    # for parada in lista_paradas:
-    #     print(parada.codigo_parada)
-    #     print(parada.endereco_localizacao)
-    #     print(parada.nome_parada)
-    #     print(parada.posicao.latitude)
-    #     print(parada.posicao.longitude)
-    #
-    #     print('--------------------')
-    # print('--------------------')
-    # print('--------------------')
-    # lista_posicoes_onibus = ss.buscar_posicoes_veiculos(a[0].codigo_identificador)
-    # print(lista_posicoes_onibus)
-    # for onibus in lista_posicoes_onibus:
-    #     print(onibus.prefixo)
-    #     print(onibus.acessibiliade)
-    #     print(onibus.posicao.latitude)
-    #     print(onibus.posicao.latitude)
-    #     print('--------------------')
+        print('lat', parada.posicao.latitude)
+        print('lon', parada.posicao.longitude)
+        folium.Marker([parada.posicao.longitude, parada.posicao.latitude, ]).add_to(mapa_parada)
+    mapa_parada

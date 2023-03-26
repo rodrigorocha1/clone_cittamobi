@@ -1,0 +1,15 @@
+1 - Busca por linha
+	1 - Linhas -> Buscar
+	2 - Buscar -> BuscarParadasPorLinha	
+	3 - Posição dos veículos -> Linha
+	4 - Previsão de chegada -> Linha
+Gerar dataframe
+2 - Busca por parada (ParadaService)
+	1 - Paradas -> Buscar
+		usar o "cp" -> código da parada
+		concatenar "cp" - "np" - "ed"
+        2 - Previsão de chegada -> Parada
+
+Gerar dataframe
+3 - Posição -> Linha (GET TODOS)
+4 - Posição dos veículos -> Garagem

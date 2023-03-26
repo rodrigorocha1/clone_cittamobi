@@ -22,10 +22,9 @@ class Linha:
     def adicionar_onibus(self, onibus: Onibus) -> None:
         self.__onibus.append(onibus)
 
-    def mostrar_relacao_onibus(self) -> None:
-        print('linha', self.codigo_identificador)
-        for onibus in self.__onibus:
-            print(onibus.id_onibus)
+    @property
+    def onibus(self) -> None:
+        return self.__onibus
 
     def __str__(self):
         return str(self.codigo_identificador) + ' ' \

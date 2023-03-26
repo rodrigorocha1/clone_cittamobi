@@ -10,7 +10,7 @@ class Parada:
         self.endereco_localizacao = json_parada['ed'] if json_parada.get('ed') is not None else None
         self.codigo_parada = json_parada['cp'] if json_parada.get('cp') is not None else None
         self.nome_parada = json_parada['np'] if json_parada.get('np') is not None else None
-        self._posicao = Posicao(json_parada['px'], json_parada['py'])
+        self._posicao = Posicao(json_parada['py'], json_parada['px'])
         self.__onibus = []
 
     @property
