@@ -11,15 +11,15 @@ class Parada:
         self.codigo_parada = json_parada['cp'] if json_parada.get('cp') is not None else None
         self.nome_parada = json_parada['np'] if json_parada.get('np') is not None else None
         self._posicao = Posicao(json_parada['py'], json_parada['px'])
-        self.__onibus = []
+        self._onibus = []
 
     @property
     def posicao(self) -> Posicao:
         return self._posicao
 
     def adicionar_onibus(self, onibus: Onibus):
-        self.__onibus.append(onibus)
+        self._onibus.append(onibus)
 
     @property
     def mostrar_onibus(self):
-        return self.__onibus
+        return self._onibus
