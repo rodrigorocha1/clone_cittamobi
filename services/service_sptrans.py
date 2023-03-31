@@ -45,12 +45,8 @@ class ServiceSPTRANS:
             for parada in req['ps']:
                 p = Parada(parada)
                 for onibus in parada['vs']:
-                    print(onibus)
                     onibus = Onibus(onibus)
                     p.adicionar_onibus(onibus)
-                    print(p.nome_parada)
-                    print(onibus.posicao.latitude)
-
                     lista_parada.append(p)
 
             return lista_parada
