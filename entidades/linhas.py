@@ -1,7 +1,6 @@
 from time import sleep
 from folium import folium
 from entidades.onibus import Onibus
-import pandas as pd
 from typing import Dict
 from entidades.trajeto import Trajeto
 from services.service_sptrans import ServiceSPTRANS

@@ -1,7 +1,6 @@
-from entidades.posicao import Posicao
 from entidades.linhas import Linha
 from entidades.posicao import Posicao
-from typing import Dict, List
+from typing import Dict
 
 
 class Parada:

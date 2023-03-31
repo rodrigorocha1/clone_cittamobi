@@ -5,7 +5,7 @@
 	4 - Previsão de chegada -> Linha
 Gerar dataframe
 2 - Busca por parada (ParadaService)
-	1 - Paradas -> Buscar
+	1 - Paradas -> Buscar (End e todas as paradas)
 		usar o "cp" -> código da parada
 		concatenar "cp" - "np" - "ed"
         2 - Previsão de chegada -> Parada
