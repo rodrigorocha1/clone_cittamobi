@@ -36,6 +36,8 @@ class Linha:
             self.terminal_principal + ' ' + self.terminal_secundario + ' ' + str(
                 self.quantidade_veiculos) + self.cor_trajeto
 
+    # Fazer método para contar os ônibus em circulação
+
     def atualizar_posicao_onibus(self, linhas):
         ss = ServiceSPTRANS()
         linhas = ss.consultar_linha('8000-10')
