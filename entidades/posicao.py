@@ -3,3 +3,6 @@ class Posicao:
         self.horario_captura = horario_captura
         self.longitude = longitude
         self.latitude = latitude
+
+    def __str__(self):
+        return [self.latitude, self.longitude]
