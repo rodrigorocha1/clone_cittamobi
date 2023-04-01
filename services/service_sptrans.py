@@ -1,8 +1,4 @@
-from entidades.linhas import Linha
 from services.service_sptrans_api import ServiceSPTRANSAPI
-from entidades.parada import Parada
-from typing import List
-from entidades.onibus import Onibus
 import folium
 from abc import ABC
 
@@ -15,14 +11,6 @@ class ServiceSPTRANS(ABC):
         path = '/Login/Autenticar?token='
         req = self.__sptrans_api.requests_api(path)
         return req
-
-
-
-
-
-
-
-
 
 
 if __name__ == '__main__':
