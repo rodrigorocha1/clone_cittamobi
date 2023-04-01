@@ -2,7 +2,7 @@ import dash
 from dash import html, dcc, callback
 import dash_bootstrap_components as dbc
 
-dash.register_page(__name__)
+dash.register_page(__name__, path='/', name='Rota Por Linha')
 
 
 class LayoutMapaLinha:

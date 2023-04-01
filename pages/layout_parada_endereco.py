@@ -2,7 +2,7 @@ import dash
 from dash import html, dcc, callback
 import dash_bootstrap_components as dbc
 
-dash.register_page(__name__)
+dash.register_page(__name__, name='Parada por Endereços')
 
 
 class LayoutParadaEndereco:
