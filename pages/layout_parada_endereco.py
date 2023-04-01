@@ -12,7 +12,7 @@ class LayoutParadaEndereco:
     def _get_layout(self):
         return dbc.Row(
             [
-                html.P('Busca de LayoutParadaEnderecoa')
+                html.P('Busca de LayoutParadaEnderecoa', style={'color': 'black'})
             ], id='id_linha_mapa_linha'
         )
 

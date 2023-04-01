@@ -12,7 +12,7 @@ class LayoutTodasParadas:
     def _get_layout(self):
         return dbc.Row(
             [
-                html.P('LayoutTodasParadas')
+                html.P('LayoutTodasParadas', style={'color': 'black'})
             ], id='id_linha_mapa_linha'
         )
 

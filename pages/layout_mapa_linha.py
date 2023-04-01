@@ -10,10 +10,14 @@ class LayoutMapaLinha:
         self.tela = self._get_layout()
 
     def _get_layout(self):
-        return dbc.Row(
+        return html.Div(
             [
-                html.P('Busca de mapa por linha')
-            ], id='id_linha_mapa_linha'
+                dbc.Row(
+                    [
+                        html.P('Busca de mapa por linha', style={'color': 'black'})
+                    ], id='id_linha_mapa_linha'
+                )
+            ], id='id_main_div_mapa_linha'
         )
 
 
