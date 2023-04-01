@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
+* {
+    font-family: 'Roboto', sans-serif;
+}
+
+
+#id_barra {
+    color: white;
+}
+
+#id_container_pages {
+    color: #F6F8FE;
+}
+
+#nav_custom {
+    margin-right: 20px;
+}
+
+/*.navbar-toggler-icon {*/
+/*    color: blue !important;*/
+/*}*/
