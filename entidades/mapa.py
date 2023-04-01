@@ -8,7 +8,7 @@ class Mapa:
     def __init__(self):
         self.__mapa = None
 
-    def criar_mapa_posical(self, linhas: Linha):
+    def criar_mapa_posicao(self, linhas: Linha):
 
         for linha in linhas:
             lista_posicoes_veiculos = self.buscar_posicoes_veiculos(linha.codigo_identificador)
@@ -27,7 +27,7 @@ class Mapa:
             for posicao_veiculo in lista_posicoes_veiculos:
                 folium.Marker([posicao_veiculo.posicao.latitude, posicao_veiculo.posicao.longitude],
                               popup=posicao_veiculo.prefixo,
-                              icon=folium.Icon(icon='bus', prefix='fa', color='blue')).add_to(mapa_parada)
+                              icon=folium.Icon(icon='bus', prefix='fa', color='blue')).add_to(self.__mapa)
 
         paradas = self.buscar_paradas(linha.codigo_identificador)
         for parada in paradas:
