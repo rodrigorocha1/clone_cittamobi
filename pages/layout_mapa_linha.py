@@ -62,7 +62,7 @@ class LayoutMapaLinha:
             Input(component_id='id_button_pesquisar_linha', component_property='n_clicks')
         )
         def gerar_mapa(linha: str, n_clicks):
-            if n_clicks is None :
+            if n_clicks is None or linha is None:
                 dash.no_update
             else:
                 ll = LinhaService()
