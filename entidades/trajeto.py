@@ -1,14 +1,15 @@
 import pandas as pd
 from typing import List
 from entidades.posicao import Posicao
+import os
 
 
 class Trajeto:
-    _base_trips = pd.read_csv('../data/raw/trips.txt', usecols=['route_id', 'shape_id'])
-    _base_shapes = pd.read_csv('../data/raw/shapes.txt',
-                              usecols=['shape_id', 'shape_pt_lat', 'shape_pt_lon', 'shape_dist_traveled'])
+    _base_trips = pd.read_csv(os.getcwd() + '\\data\\raw\\trips.txt', usecols=['route_id', 'shape_id'])
+    _base_shapes = pd.read_csv(os.getcwd() + '\\data\\raw\\shapes.txt',
+                               usecols=['shape_id', 'shape_pt_lat', 'shape_pt_lon', 'shape_dist_traveled'])
     _base_completa = _base_trips.merge(_base_shapes, on='shape_id', how='inner')
-    _base_cor_trajeto = pd.read_csv('../data/raw/routes.txt', usecols=['route_id', 'route_color'])
+    _base_cor_trajeto = pd.read_csv(os.getcwd() + '\\data\\raw\\routes.txt', usecols=['route_id', 'route_color'])
 
     def __init__(self, nome_linha: str):
         self.posicoes = self.__obter_posicoes(nome_linha)

@@ -2,9 +2,8 @@ import dash
 from dash import html, dcc, callback, Input, Output, State
 import dash_bootstrap_components as dbc
 import os
-
 from entidades.mapa import Mapa
-from services.service_sptrans import ServiceSPTRANS
+from services.linha_service import LinhaService
 
 dash.register_page(__name__, path='/', name='Rota Por Linha')
 
@@ -58,18 +57,16 @@ class LayoutMapaLinha:
 
     def _calbacks_rota_linha(self):
         @callback(
-            # Output(component_id='map', component_property='srcDoc'),
-            Output(component_id='id_div_teste', component_property='children'),
+            Output(component_id='map', component_property='srcDoc'),
             State(component_id='id_nome_linha', component_property='value'),
             Input(component_id='id_button_pesquisar_linha', component_property='n_clicks')
         )
         def gerar_mapa(linha: str, n_clicks):
-
-            if n_clicks is not None:
+            if n_clicks is None :
                 dash.no_update
             else:
-                ss = ServiceSPTRANS()
-                linhas = ss.consultar_linha(linha)
+                ll = LinhaService()
+                linhas = ll.consultar_linha(linha)
                 m = Mapa()
                 m.criar_mapa_posicao(linhas)
                 return open(os.getcwd() + '\\mapas_html\\mapa_linha.html', 'r', encoding='utf-8').read()

@@ -9,7 +9,7 @@ class ServiceSPTRANS(ABC):
 
     def _login(self) -> bool:
         path = '/Login/Autenticar?token='
-        req = self.__sptrans_api.requests_api(path)
+        req = self._sptrans_api.requests_api(path)
         return req
 
 
