@@ -27,7 +27,6 @@ class APP:
                             brand_href='#',
                             color='primary',
                             dark=True,
-
                         ),
                     ],
                     id='id_barra'
