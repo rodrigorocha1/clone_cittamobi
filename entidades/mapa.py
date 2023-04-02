@@ -1,3 +1,4 @@
+import atexit
 from datetime import datetime
 from entidades.linhas import Linha
 import folium
@@ -10,6 +11,7 @@ class Mapa:
 
     def __init__(self):
         self.__mapa = None
+        self.__camino = os.getcwd() + '\\mapas_html\\'
 
     def criar_mapa_posicao(self, linhas: Linha):
         pv = PosicaoVeiculo()
@@ -42,3 +44,7 @@ class Mapa:
                 self.__mapa)
         # mapa_parada.get_root().html.add_child(folium.Element(titulo_html))
         self.__mapa.save(os.getcwd() + '\\mapas_html\\mapa_linha.html')
+
+    def __del__(self):
+        for nome in os.listdir(self.__camino):
+            os.remove(self.__camino + nome)
