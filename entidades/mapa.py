@@ -1,8 +1,10 @@
 from datetime import datetime
 from entidades.linhas import Linha
 import folium
-from services.posicao_veiculo import PosicaoVeiculo
+from services.posicao_veiculo_service import PosicaoVeiculo
 from services.parada_service import ParadaService
+from entidades.parada import Parada
+from typing import List
 import os
 
 
@@ -11,9 +13,6 @@ class Mapa:
     def __init__(self):
         self.__mapa = None
         self.__camino = os.getcwd() + '\\mapas_html\\'
-
-
-
 
     def criar_mapa_posicao(self, linhas: Linha):
         pv = PosicaoVeiculo()
@@ -39,14 +38,23 @@ class Mapa:
                               popup=posicao_veiculo.prefixo,
                               icon=folium.Icon(icon='bus', prefix='fa', color='blue')).add_to(self.__mapa)
 
-        paradas = ps.buscar_paradas(linha.codigo_identificador)
-        for parada in paradas:
-            folium.Marker([parada.posicao.latitude, parada.posicao.longitude], popup=parada.nome_parada,
-                          icon=folium.Icon(icon='bus', prefix='fa', color='red')).add_to(
-                self.__mapa)
+            paradas = ps.buscar_paradas(linha.codigo_identificador)
+            for parada in paradas:
+                folium.Marker([parada.posicao.latitude, parada.posicao.longitude], popup=parada.nome_parada,
+                              icon=folium.Icon(icon='bus', prefix='fa', color='red')).add_to(
+                    self.__mapa)
         # mapa_parada.get_root().html.add_child(folium.Element(titulo_html))
         self.__mapa.save(os.getcwd() + '\\mapas_html\\mapa_linha.html')
 
-    def __del__(self):
-        for nome in os.listdir(self.__camino):
-            os.remove(self.__camino + nome)
+    def criar_mapa_paradas(self, paradas: List[Parada]):
+        self.__mapa = folium.Map(location=[paradas[0].posicao.latitude, paradas[0].posicao.longitude], zoom_start=14)
+        for parada in paradas:
+
+            folium.Marker([parada.posicao.latitude, parada.posicao.longitude],
+                          popup='a',
+                          icon=folium.Icon(icon='bus', prefix='fa', color='blue')).add_to(self.__mapa)
+        self.__mapa.save(os.getcwd() + '\\mapas_html\\mapa_posicoes_parada.html', )
+
+    # def __del__(self):
+    #     for nome in os.listdir(self.__camino):
+    #         os.remove(self.__camino + nome)
