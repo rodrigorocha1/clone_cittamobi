@@ -1,7 +1,7 @@
 from datetime import datetime
 from entidades.linhas import Linha
 import folium
-from posicao_veiculo import PosicaoVeiculo
+from services.posicao_veiculo import PosicaoVeiculo
 from services.parada_service import ParadaService
 import os
 
