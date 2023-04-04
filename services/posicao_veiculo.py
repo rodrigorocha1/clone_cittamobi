@@ -17,7 +17,3 @@ class PosicaoVeiculo(ServiceSPTRANS):
             lista_onibus = [Onibus(*ValidadorJson(onibus).validar_json_onibus()) for onibus in req]
             return lista_onibus
 
-
-if __name__ == '__main__':
-    pv = PosicaoVeiculo()
-    print(pv.buscar_posicoes_veiculos(2506))
