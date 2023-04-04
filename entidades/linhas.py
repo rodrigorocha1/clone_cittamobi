@@ -8,16 +8,8 @@ class Linha:
 
     @staticmethod
     def listagem_linhas():
-        base_linhas = pd.read_csv(os.getcwd() + '\\data\\raw\\routes.txt')
-        lista_linhas = base_linhas.apply(
-            lambda row: Linha(codigo_identificador=None,
-                              sentido_linha=None,
-                              modo_circular=None,
-                              letreiro_numerico=base_linhas['route_id'].str.split('-')[0],
-                              letreiro_numerico_segunda_parte=base_linhas['route_id'].str.split('-')[0],
-                              terminal_principal=base_linhas['route_long_name'].str.split('-')[0],
-                              terminal_secundario=base_linhas['route_long_name'].str.split('-')[1]), axis=1).tolist()
-        return
+        base_linhas = pd.read_csv(os.getcwd() + '\\data\\raw\\routes.txt', usecols=['route_id', 'route_long_name'])
+        return base_linhas.apply(lambda linha: linha['route_id'] + ' -- ' + linha['route_long_name'], axis=1).tolist()
 
     def __init__(self, codigo_identificador: int,
                  modo_circular: bool,
