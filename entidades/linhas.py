@@ -28,7 +28,6 @@ class Linha:
         self.terminal_secundario = terminal_secundario
         self.quantidade_veiculos = quantidade_veiculos
         self.__onibus = []
-        print(self.letreiro_numerico, self.letreiro_numerico_segunda_parte)
         self.trajeto = Trajeto(self.letreiro_numerico + '-' +
                                str(self.letreiro_numerico_segunda_parte))
 
