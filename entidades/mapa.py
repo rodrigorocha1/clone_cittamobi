@@ -55,6 +55,6 @@ class Mapa:
                           icon=folium.Icon(icon='bus', prefix='fa', color='blue')).add_to(self.__mapa)
         self.__mapa.save(os.getcwd() + '\\mapas_html\\mapa_posicoes_parada.html', )
 
-    # def __del__(self):
-    #     for nome in os.listdir(self.__camino):
-    #         os.remove(self.__camino + nome)
+    def __del__(self):
+        for nome in os.listdir(self.__camino):
+            os.remove(self.__camino + nome)
