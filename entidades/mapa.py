@@ -12,6 +12,9 @@ class Mapa:
         self.__mapa = None
         self.__camino = os.getcwd() + '\\mapas_html\\'
 
+
+
+
     def criar_mapa_posicao(self, linhas: Linha):
         pv = PosicaoVeiculo()
         ps = ParadaService()
