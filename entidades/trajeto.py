@@ -34,8 +34,3 @@ class Trajeto:
         """
         cor_trajeto = self._base_cor_trajeto[self._base_cor_trajeto['route_id'] == nome_linha]['route_color'].iloc[0]
         return cor_trajeto
-
-
-if __name__ == '__main__':
-    t = Trajeto('8000-10')
-    print(t.cor)
