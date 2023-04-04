@@ -1,6 +1,7 @@
 from typing import List
 from entidades.onibus import Onibus
 from services.service_sptrans import ServiceSPTRANS
+from services.validador_json import ValidadorJson
 
 
 class PosicaoVeiculo(ServiceSPTRANS):
@@ -13,5 +14,10 @@ class PosicaoVeiculo(ServiceSPTRANS):
         if self._login():
             req = self._sptrans_api.requests_api(path, 'GET')
             req = req['vs']
+            lista_onibus = [Onibus(*ValidadorJson(onibus).validar_json_onibus()) for onibus in req]
+            return lista_onibus
 
-            return [Onibus(p) for p in req]
+
+if __name__ == '__main__':
+    pv = PosicaoVeiculo()
+    print(pv.buscar_posicoes_veiculos(2506))

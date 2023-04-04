@@ -9,9 +9,9 @@ class ValidadorJson:
 
     def validar_json_parada(self):
         endereco_localizacao = self.json_resposta['ed'] if self.json_resposta.get('ed') is not None else None
-        codigo_parada = self.json_resposta['cp'] if self.json_parada.get('cp') is not None else None
-        nome_parada = self.json_resposta['np'] if self.json_parada.get('np') is not None else None
-        posicao = Posicao(self.json_resposta['py'], self.json_parada['px'])
+        codigo_parada = self.json_resposta['cp'] if self.json_resposta.get('cp') is not None else None
+        nome_parada = self.json_resposta['np'] if self.json_resposta.get('np') is not None else None
+        posicao = Posicao(self.json_resposta['py'], self.json_resposta['px'])
         return endereco_localizacao, codigo_parada, nome_parada, posicao
 
     def validar_json_onibus(self):
