@@ -5,7 +5,7 @@ from dash import html, dcc, callback, Input, Output, State
 import dash_bootstrap_components as dbc
 import os
 from entidades.mapa import Mapa
-from linha_service import LinhaService
+from services.linha_service import LinhaService
 
 dash.register_page(__name__, name='Rota Por Linha', path='/')
 

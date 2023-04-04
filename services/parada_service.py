@@ -15,7 +15,3 @@ class ParadaService(ServiceSPTRANS):
             req = self._sptrans_api.requests_api(path, 'GET')
             lista_paradas = [Parada(*ValidadorJson(parada).validar_json_parada()) for parada in req]
             return lista_paradas
-
-
-
-

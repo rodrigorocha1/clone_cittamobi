@@ -20,6 +20,3 @@ class LinhaService(ServiceSPTRANS):
 
 
 
-if __name__ == '__main__':
-    ls = LinhaService()
-    print(ls.consultar_linha(800))
