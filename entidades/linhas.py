@@ -1,9 +1,23 @@
 from entidades.onibus import Onibus
-from typing import Dict
+import pandas as pd
 from entidades.trajeto import Trajeto
+import os
 
 
 class Linha:
+
+    @staticmethod
+    def listagem_linhas():
+        base_linhas = pd.read_csv(os.getcwd() + '\\data\\raw\\routes.txt')
+        lista_linhas = base_linhas.apply(
+            lambda row: Linha(codigo_identificador=None,
+                              sentido_linha=None,
+                              modo_circular=None,
+                              letreiro_numerico=base_linhas['route_id'].str.split('-')[0],
+                              letreiro_numerico_segunda_parte=base_linhas['route_id'].str.split('-')[0],
+                              terminal_principal=base_linhas['route_long_name'].str.split('-')[0],
+                              terminal_secundario=base_linhas['route_long_name'].str.split('-')[1]), axis=1).tolist()
+        return
 
     def __init__(self, codigo_identificador: int,
                  modo_circular: bool,
@@ -22,6 +36,7 @@ class Linha:
         self.terminal_secundario = terminal_secundario
         self.quantidade_veiculos = quantidade_veiculos
         self.__onibus = []
+        print(self.letreiro_numerico, self.letreiro_numerico_segunda_parte)
         self.trajeto = Trajeto(self.letreiro_numerico + '-' +
                                str(self.letreiro_numerico_segunda_parte))
 
