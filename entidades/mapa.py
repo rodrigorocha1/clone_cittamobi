@@ -52,7 +52,7 @@ class Mapa:
                 self._marcador_mapa(posicao_veiculo.posicao.latitude, posicao_veiculo.posicao.longitude,
                                      posicao_veiculo.prefixo, icon).add_to(self._mapa)
 
-            paradas = ps.buscar_paradas(linha.codigo_identificador)
+            paradas = ps.buscar_paradas_por_linha(linha.codigo_identificador)
             icon = ('bus', 'fa', 'red')
             for parada in paradas:
                 self._marcador_mapa(parada.posicao.latitude, parada.posicao.longitude, parada.nome_parada,
