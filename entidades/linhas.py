@@ -5,14 +5,21 @@ from entidades.trajeto import Trajeto
 
 class Linha:
 
-    def __init__(self, json_linha: Dict[str, object], quantidade_veiculos=0) -> None:
-        self.codigo_identificador = json_linha['cl'] if json_linha.get('cl') is not None else None
-        self.modo_circular = json_linha['lc'] if json_linha.get('lc') is not None else None
-        self.letreiro_numerico = json_linha['lt'] if json_linha.get('lt') is not None else None
-        self.letreiro_numerico_segunda_parte = json_linha['tl'] if json_linha.get('tl') is not None else None
-        self.sentido_linha = json_linha['sl'] if json_linha.get('sl') is not None else None
-        self.terminal_principal = json_linha['tp'] if json_linha.get('tp') is not None else None
-        self.terminal_secundario = json_linha['ts'] if json_linha.get('ts') is not None else None
+    def __init__(self, codigo_identificador: int,
+                 modo_circular: bool,
+                 letreiro_numerico: int,
+                 letreiro_numerico_segunda_parte: int,
+                 sentido_linha: int,
+                 terminal_principal: str,
+                 terminal_secundario: str,
+                 quantidade_veiculos=0) -> None:
+        self.codigo_identificador = codigo_identificador
+        self.modo_circular = modo_circular
+        self.letreiro_numerico = letreiro_numerico
+        self.letreiro_numerico_segunda_parte = letreiro_numerico_segunda_parte
+        self.sentido_linha = sentido_linha
+        self.terminal_principal = terminal_principal
+        self.terminal_secundario = terminal_secundario
         self.quantidade_veiculos = quantidade_veiculos
         self.__onibus = []
         self.trajeto = Trajeto(self.letreiro_numerico + '-' +
@@ -31,8 +38,6 @@ class Linha:
             self.sentido_linha) + ' ' + \
             self.terminal_principal + ' ' + self.terminal_secundario + ' ' + str(
                 self.quantidade_veiculos) + self.cor_trajeto
-
-    # Fazer método para contar os ônibus em circulação
 
     def total_onibus_circulacao(self):
         return len(self.__onibus)
