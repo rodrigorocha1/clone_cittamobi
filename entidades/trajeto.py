@@ -5,7 +5,6 @@ import os
 
 
 class Trajeto:
-    print(os.getcwd())
     _base_trips = pd.read_csv(os.getcwd() + '\\data\\raw\\trips.txt', usecols=['route_id', 'shape_id'])
     _base_shapes = pd.read_csv(os.getcwd() + '\\data\\raw\\shapes.txt',
                                usecols=['shape_id', 'shape_pt_lat', 'shape_pt_lon', 'shape_dist_traveled'])
