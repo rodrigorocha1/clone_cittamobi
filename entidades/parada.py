@@ -15,8 +15,8 @@ class Parada:
         return self._posicao
 
     def adicionar_linhas(self, linha: Linha):
-        self._onibus.append(linha)
+        self._linha.append(linha)
 
     @property
-    def mostrar_onibus(self):
+    def mostrar_linha(self):
         return self._linha
