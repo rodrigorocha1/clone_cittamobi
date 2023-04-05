@@ -13,7 +13,7 @@ class Linha:
 
     def __init__(self, codigo_identificador: int,
                  modo_circular: bool,
-                 letreiro_numerico: int,
+                 letreiro_numerico: str,
                  letreiro_numerico_segunda_parte: int,
                  sentido_linha: int,
                  terminal_principal: str,
