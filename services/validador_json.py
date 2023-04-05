@@ -28,4 +28,5 @@ class ValidadorJson:
         sentido_linha = self.json_resposta['sl'] if self.json_resposta.get('sl') is not None else None
         terminal_principal = self.json_resposta['tp'] if self.json_resposta.get('tp') is not None else None
         terminal_secundario = self.json_resposta['ts'] if self.json_resposta.get('ts') is not None else None
-        return codigo_identificador, modo_circular, letreiro_numerico, letreiro_numerico_segunda_parte, sentido_linha, terminal_principal, terminal_secundario
+        return codigo_identificador, modo_circular, letreiro_numerico, letreiro_numerico_segunda_parte, sentido_linha, \
+            terminal_principal, terminal_secundario
