@@ -2,6 +2,8 @@ from entidades.onibus import Onibus
 import pandas as pd
 from entidades.trajeto import Trajeto
 import os
+from typing import List
+
 
 
 class Linha:
@@ -35,7 +37,7 @@ class Linha:
         self.__onibus.append(onibus)
 
     @property
-    def onibus(self) -> None:
+    def onibus(self) -> List[Onibus]:
         return self.__onibus
 
     def total_onibus_circulacao(self):

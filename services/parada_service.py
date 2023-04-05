@@ -34,7 +34,7 @@ class ParadaService(ServiceSPTRANS):
 
             req = self._sptrans_api.requests_api(path, 'GET')
             parada = Parada(codigo_parada=req['p']['cp'],
-                            nome_parada=req['p']['cp'],
+                            nome_parada=req['p']['np'],
                             endereco_localizacao=parada.endereco_localizacao,
                             posicao=Posicao(req['p']['py'], req['p']['px']))
             for req_linha in req['p']['l']:
@@ -51,6 +51,7 @@ class ParadaService(ServiceSPTRANS):
                 for req_onibus in req_linha['vs']:
                     onibus = Onibus(prefixo=req_onibus['p'],
                                     acessibiliade=req_onibus['a'],
+                                    horario_previsto=req_onibus['t'],
                                     posicao=Posicao(req_onibus['py'], req_onibus['px'])
                                     )
                     linha.adicionar_onibus(onibus)
