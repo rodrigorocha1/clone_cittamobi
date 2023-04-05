@@ -14,7 +14,7 @@ class Linha:
     def __init__(self, codigo_identificador: int,
                  modo_circular: bool,
                  letreiro_numerico: str,
-                 letreiro_numerico_segunda_parte: int,
+                 letreiro_numerico_segunda_parte: str,
                  sentido_linha: int,
                  terminal_principal: str,
                  terminal_secundario: str,
@@ -37,13 +37,6 @@ class Linha:
     @property
     def onibus(self) -> None:
         return self.__onibus
-
-    def __str__(self):
-        return str(self.codigo_identificador) + ' ' \
-                                                '' + str(self.modo_circular) + ' ' + str(self.letreiro_numerico) + str(
-            self.sentido_linha) + ' ' + \
-            self.terminal_principal + ' ' + self.terminal_secundario + ' ' + str(
-                self.quantidade_veiculos) + self.cor_trajeto
 
     def total_onibus_circulacao(self):
         return len(self.__onibus)

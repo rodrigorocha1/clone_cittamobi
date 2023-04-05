@@ -1,3 +1,4 @@
+from entidades.onibus import Onibus
 from services.service_sptrans import ServiceSPTRANS
 from typing import List
 from entidades.parada import Parada
@@ -26,6 +27,8 @@ class ParadaService(ServiceSPTRANS):
             return self._buscar_previsao_parada(lista_parada)
 
     def _buscar_previsao_parada(self, lista_parada: List[Parada]):
+        lista_previsoes = []
+
         for parada in lista_parada:
             path = '/Previsao/Parada?codigoParada=' + str(parada.codigo_parada)
 
@@ -33,15 +36,24 @@ class ParadaService(ServiceSPTRANS):
             parada = Parada(codigo_parada=req['p']['cp'],
                             nome_parada=req['p']['cp'],
                             endereco_localizacao=parada.endereco_localizacao,
-                            posicao=Posicao(req['py'], req['px']))
-            for linha in req['l']:
-                linha = Linha(codigo_identificador=linha['cl'],
-                              sentido_linha=linha['sl'],
-                              letreiro_numerico=linha['c'].split('-')[0],
-                              letreiro_numerico_segunda_parte=int(linha['c'].split('-')[0]),
+                            posicao=Posicao(req['p']['py'], req['p']['px']))
+            for req_linha in req['p']['l']:
+                linha = Linha(codigo_identificador=req_linha['cl'],
+                              sentido_linha=req_linha['sl'],
+                              letreiro_numerico=req_linha['c'].split('-')[0],
+                              letreiro_numerico_segunda_parte=(req_linha['c'].split('-')[1]),
                               modo_circular=None,
-                              terminal_secundario=linha['t1'],
-                              terminal_principal=linha['t0']
+                              terminal_secundario=req_linha['lt1'],
+                              terminal_principal=req_linha['lt0'],
+
                               )
 
-            return req
+                for req_onibus in req_linha['vs']:
+                    onibus = Onibus(prefixo=req_onibus['p'],
+                                    acessibiliade=req_onibus['a'],
+                                    posicao=Posicao(req_onibus['py'], req_onibus['px'])
+                                    )
+                    linha.adicionar_onibus(onibus)
+                parada.adicionar_linhas(linha)
+            lista_previsoes.append(parada)
+        return lista_previsoes
