@@ -32,7 +32,7 @@ class LayoutMapaLinha:
                             dbc.InputGroup(
                                 [
                                     dbc.Input(id='id_nome_linha',
-                                              placeholder='Digite o código da linha'),
+                                              placeholder='Digite occ código da zlinhaa'),
                                     dbc.Button('Pesquisar',
                                                id='id_button_pesquisar_linha',
                                                className="class_input_group_container"
@@ -59,6 +59,7 @@ class LayoutMapaLinha:
         )
 
     def _calbacks_rota_linha(self):
+
 
         @callback(
             Output(component_id='map', component_property='srcDoc'),

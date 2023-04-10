@@ -18,6 +18,7 @@ class APP:
         self.app.layout = self._get_layout()
 
     def _get_layout(self):
+        
         return html.Div(
             [
                 dbc.Row(
@@ -45,7 +46,7 @@ class APP:
         )
 
     def rodar_servico(self):
-        self.app.run_server(debug=True, port=8496)
+        self.app.run_server(debug=True)
 
 
 a = APP()
