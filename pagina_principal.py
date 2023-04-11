@@ -13,12 +13,13 @@ class APP:
     """
 
     def __init__(self):
-        self.app = Dash(__name__, use_pages=True, external_stylesheets=[dbc.themes.BOOTSTRAP])
+        self.app = Dash(__name__, use_pages=True,
+                        external_stylesheets=[dbc.themes.BOOTSTRAP])
         self.app.config['suppress_callback_exceptions'] = True
         self.app.layout = self._get_layout()
 
     def _get_layout(self):
-        
+
         return html.Div(
             [
                 dbc.Row(
@@ -53,5 +54,4 @@ a = APP()
 server = a.app.server
 
 if __name__ == '__main__':
-
     a.rodar_servico()
