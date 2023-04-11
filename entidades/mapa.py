@@ -26,7 +26,7 @@ class Mapa:
                              icon=folium.Icon(icon=icon[0], prefix=icon[1], color=icon[2]))
 
     def _salvar_mapa(self, nome_arquivo_mapa: str):
-        self._mapa.save(os.getcwd() + '\\mapas_html\\' + nome_arquivo_mapa)
+        self.__mapa.save(os.getcwd() + '\\mapas_html\\' + nome_arquivo_mapa)
 
     def criar_mapa_posicao(self, linhas: Linha):
         pv = PosicaoVeiculo()
@@ -40,7 +40,7 @@ class Mapa:
                </h1><h1>Horário de Referência: {datetime.now().strftime('%HH:%MM:%SS')} </h1>"""
 
             self._mapa = self._criar_mapa(linha.trajeto.posicoes[len(linha.trajeto.posicoes) // 2].latitude,
-                             linha.trajeto.posicoes[len(linha.trajeto.posicoes) // 2].longitude)
+                                          linha.trajeto.posicoes[len(linha.trajeto.posicoes) // 2].longitude)
 
             for i in range(len(linha.trajeto.posicoes) - 1):
                 ponto_inicial = [linha.trajeto.posicoes[i].latitude,
@@ -72,7 +72,7 @@ class Mapa:
         for parada in paradas:
             self._marcador_mapa(
                 parada.posicao.latitude, parada.posicao.longitude, 'a', icon).add_to(self._mapa)
-        self._salvar_mapa('mapa_posicoes_parada.html')
+        self._salvar_mapa('mapa_previsao.html')
 
     def __del__(self):
         for nome in os.listdir(self._camino):
