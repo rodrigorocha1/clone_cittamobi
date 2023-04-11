@@ -1,10 +1,10 @@
 import atexit
-
 import dash
 from dash import html, dcc, callback, Input, Output, State
 import dash_bootstrap_components as dbc
 import os
 from entidades.mapa import Mapa
+from entidades.linhas import Linha
 from services.linha_service import LinhaService
 
 dash.register_page(__name__, name='Rota Por Linha', path='/')
@@ -31,8 +31,10 @@ class LayoutMapaLinha:
                         dbc.Col(
                             dbc.InputGroup(
                                 [
-                                    dbc.Input(id='id_nome_linha',
-                                              placeholder='Digite occ código da zlinhaa'),
+                                    dbc.Select(
+                                        [linha for linha in Linha.listagem_linhas()],
+                                        id='id_nome_linha',
+                                    ),
                                     dbc.Button('Pesquisar',
                                                id='id_button_pesquisar_linha',
                                                className="class_input_group_container"
@@ -52,7 +54,8 @@ class LayoutMapaLinha:
                                                           'r',
                                                           encoding='utf-8').read(), width='100%',
                                     height='600'),
-                        dcc.Interval(id='interval-component', interval=10 * 1000, n_intervals=0)
+                        dcc.Interval(id='interval-component',
+                                     interval=10 * 1000, n_intervals=0)
                     ], id='id_mapa_linha'
                 )
             ], id='id_main_div_mapa_linha'
@@ -60,11 +63,11 @@ class LayoutMapaLinha:
 
     def _calbacks_rota_linha(self):
 
-
         @callback(
             Output(component_id='map', component_property='srcDoc'),
             State(component_id='id_nome_linha', component_property='value'),
-            Input(component_id='id_button_pesquisar_linha', component_property='n_clicks'),
+            Input(component_id='id_button_pesquisar_linha',
+                  component_property='n_clicks'),
             Input('interval-component', 'n_intervals')
         )
         def gerar_mapa(linha: str, n_clicks, n_intervals):
