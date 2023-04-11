@@ -7,6 +7,13 @@ dash.register_page(__name__, name='Parada por Endereços')
 
 
 class LayoutParadaEndereco:
+
+    @staticmethod
+    def __criar_arquivo():
+        if not os.path.exists(os.getcwd() + '\\mapas_html\\mapa_previsao.html'):
+            with open(os.getcwd() + '\\mapas_html\\mapa_previsao.html', 'w', encoding='utf-8') as f:
+                f.write('')
+
     def __init__(self):
         self.tela = self._get_layout()
 
@@ -43,7 +50,7 @@ class LayoutParadaEndereco:
                         dbc.Col(
                             html.Iframe(
                                 id='map',
-                                srcDoc=open(os.getcwd() + '\\mapas_html\\mapa_linha.html',
+                                srcDoc=open(os.getcwd() + '\\mapas_html\\mapa_previsao.html',
                                             'r',
                                             encoding='utf-8').read(), width='100%',
                                 height='600'),
