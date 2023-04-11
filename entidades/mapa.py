@@ -71,7 +71,7 @@ class Mapa:
         icon = ('bus', 'fa', 'red')
         for parada in paradas:
             self._marcador_mapa(
-                parada.posicao.latitude, parada.posicao.longitude, 'a', icon).add_to(self._mapa)
+                parada.posicao.latitude, parada.posicao.longitude, parada.codigo_parada, icon).add_to(self._mapa)
         self._salvar_mapa('mapa_previsao.html')
 
     def __del__(self):
