@@ -80,16 +80,16 @@ class LayoutParadaEndereco:
                   component_property='n_clicks'),
 
         )
-        def gerar_mapa(linha: str, n_clicks):
-            print(linha, n_clicks)
+        def gerar_mapa(endereco: str, n_clicks):
+
             if n_clicks is None:
                 return dash.no_update
-            if linha is None or len(linha.strip()) == 0:
+            if endereco is None or len(endereco.strip()) == 0:
                 return dash.no_update
 
             previsao_parada = ParadaService()
             previsao_paradas = previsao_parada.buscar_parada_previsao_endereco(
-                previsao_parada)
+                endereco=endereco)
             m = Mapa()
             m.criar_mapa_posicao(previsao_paradas)
             atexit.register(lambda: m.__del__() if m else None)
