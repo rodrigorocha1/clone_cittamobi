@@ -1,10 +1,6 @@
-import atexit
-
 from dash import Dash, html, dash
 import dash
 import dash_bootstrap_components as dbc
-
-from entidades.mapa import Mapa
 
 
 class APP:
