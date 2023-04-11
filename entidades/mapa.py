@@ -26,7 +26,7 @@ class Mapa:
                              icon=folium.Icon(icon=icon[0], prefix=icon[1], color=icon[2]))
 
     def _salvar_mapa(self, nome_arquivo_mapa: str):
-        self.__mapa.save(os.getcwd() + '\\mapas_html\\' + nome_arquivo_mapa)
+        self._mapa.save(os.getcwd() + '\\mapas_html\\' + nome_arquivo_mapa)
 
     def criar_mapa_posicao(self, linhas: Linha):
         pv = PosicaoVeiculo()
