@@ -12,13 +12,15 @@ dash.register_page(__name__, name='Parada por Endereços')
 class LayoutParadaEndereco:
 
     @staticmethod
-    def __criar_arquivo():
+    def _criar_arquivo():
         if not os.path.exists(os.getcwd() + '\\mapas_html\\mapa_previsao.html'):
             with open(os.getcwd() + '\\mapas_html\\mapa_previsao.html', 'w', encoding='utf-8') as f:
                 f.write('')
 
     def __init__(self):
+        self._criar_arquivo()
         self.tela = self._get_layout()
+        self._calbacks_previsao()
 
     def _get_layout(self):
         return html.Div(
