@@ -91,7 +91,7 @@ class LayoutParadaEndereco:
             m = Mapa()
             m.criar_mapa_posicao(previsao_paradas)
             atexit.register(lambda: m.__del__() if m else None)
-            return open(os.getcwd() + '\\mapas_html\\mapa_previsao.htm', 'r', encoding='utf-8').read()
+            return open(os.getcwd() + '\\mapas_html\\mapa_previsao.html', 'r', encoding='utf-8').read()
 
 
 lpe = LayoutParadaEndereco()
