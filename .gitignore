@@ -38,3 +38,4 @@ __pycache__/pagina_principal.cpython-37.pyc
 pages/__pycache__/layout_mapa_linha.cpython-37.pyc
 pages/__pycache__/layout_parada_endereco.cpython-37.pyc
 pages/__pycache__/layout_todas_as_paradas.cpython-37.pyc
+mapas_html/mapa_linha.html
