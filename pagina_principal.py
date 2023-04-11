@@ -26,9 +26,10 @@ class APP:
                     [
                         dbc.NavbarSimple(
                             children=[
-                                dbc.NavLink(pagina["name"], href=pagina["relative_path"], className='nav_custom') for
-                                pagina in
-                                dash.page_registry.values()
+                                dbc.NavLink(pagina["name"],
+                                            href=pagina["relative_path"],
+                                            className='nav_custom') for
+                                pagina in dash.page_registry.values()
                             ],
                             brand='Cadê o Ônibus',
                             brand_href='#',
