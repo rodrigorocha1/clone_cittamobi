@@ -18,16 +18,15 @@ class Mapa:
         return folium.Map(location=[latitude, longitude], zoom_start=14)
 
     def _desenhar_linha(self, ponto_inicial: List, ponto_final: List, cor: str):
-        return folium.PolyLine(locations=[ponto_inicial, ponto_final], color=f'#{cor}').add_to(
-            self._mapa)
+        return folium.PolyLine(locations=[ponto_inicial, ponto_final], color=f'#{cor}')
 
     def _marcador_mapa(self, latitude: float, longitude: float, popup: str, icon: Tuple):
         return folium.Marker([latitude, longitude],
                              popup=popup,
-                             icon=folium.Icon(icon=icon[0], prefix=icon[1], color=icon[2])).add_to(self._mapa)
+                             icon=folium.Icon(icon=icon[0], prefix=icon[1], color=icon[2]))
 
     def _salvar_mapa(self, nome_arquivo_mapa: str):
-        self.__mapa.save(os.getcwd() + '\\mapas_html\\' + nome_arquivo_mapa)
+        self._mapa.save(os.getcwd() + '\\mapas_html\\' + nome_arquivo_mapa)
 
     def criar_mapa_posicao(self, linhas: Linha):
         pv = PosicaoVeiculo()
@@ -35,36 +34,44 @@ class Mapa:
 
         for linha in linhas:
 
-            lista_posicoes_veiculos = pv.buscar_posicoes_veiculos(linha.codigo_identificador)
+            lista_posicoes_veiculos = pv.buscar_posicoes_veiculos(
+                linha.codigo_identificador)
             titulo_html = f"""<h1>Mapa da linha {linha.terminal_principal, '-', linha.terminal_secundario}
                </h1><h1>Horário de Referência: {datetime.now().strftime('%HH:%MM:%SS')} </h1>"""
 
-            self._criar_mapa(linha.trajeto.posicoes[len(linha.trajeto.posicoes) // 2].latitude,
-                              linha.trajeto.posicoes[len(linha.trajeto.posicoes) // 2].longitude)
+            self._mapa = self._criar_mapa(linha.trajeto.posicoes[len(linha.trajeto.posicoes) // 2].latitude,
+                             linha.trajeto.posicoes[len(linha.trajeto.posicoes) // 2].longitude)
 
             for i in range(len(linha.trajeto.posicoes) - 1):
-                ponto_inicial = [linha.trajeto.posicoes[i].latitude, linha.trajeto.posicoes[i].longitude]
-                ponto_final = [linha.trajeto.posicoes[i + 1].latitude, linha.trajeto.posicoes[i + 1].longitude]
-                self._desenhar_linha(ponto_inicial, ponto_final, linha.trajeto.cor).add_to(self._mapa)
+                ponto_inicial = [linha.trajeto.posicoes[i].latitude,
+                                 linha.trajeto.posicoes[i].longitude]
+                ponto_final = [linha.trajeto.posicoes[i + 1].latitude,
+                               linha.trajeto.posicoes[i + 1].longitude]
+                self._desenhar_linha(
+                    ponto_inicial,
+                    ponto_final, linha.trajeto.cor
+                ).add_to(self._mapa)
 
             for posicao_veiculo in lista_posicoes_veiculos:
                 icon = ('bus', 'fa', 'blue')
                 self._marcador_mapa(posicao_veiculo.posicao.latitude, posicao_veiculo.posicao.longitude,
-                                     posicao_veiculo.prefixo, icon).add_to(self._mapa)
+                                    posicao_veiculo.prefixo, icon).add_to(self._mapa)
 
             paradas = ps.buscar_paradas_por_linha(linha.codigo_identificador)
             icon = ('bus', 'fa', 'red')
             for parada in paradas:
                 self._marcador_mapa(parada.posicao.latitude, parada.posicao.longitude, parada.nome_parada,
-                                     icon).add_to(self._mapa)
+                                    icon).add_to(self._mapa)
         # mapa_parada.get_root().html.add_child(folium.Element(titulo_html))
         self._salvar_mapa('mapa_linha.html')
 
     def criar_mapa_paradas(self, paradas: List[Parada]):
-        self._mapa = self._criar_mapa(paradas[0].posicao.latitude, paradas[0].posicao.longitude)
+        self._mapa = self._criar_mapa(
+            paradas[0].posicao.latitude, paradas[0].posicao.longitude)
         icon = ('bus', 'fa', 'red')
         for parada in paradas:
-            self._marcador_mapa(parada.posicao.latitude, parada.posicao.longitude, 'a', icon).add_to(self._mapa)
+            self._marcador_mapa(
+                parada.posicao.latitude, parada.posicao.longitude, 'a', icon).add_to(self._mapa)
         self._salvar_mapa('mapa_posicoes_parada.html')
 
     def __del__(self):
