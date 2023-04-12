@@ -4,7 +4,7 @@ from time import time
 tempo_inicial = time()
 
 ps = ParadaService()
-previsao_paradas = ps.buscar_parada_previsao_endereco('USP')
+previsao_paradas = ps.buscar_parada_previsao_endereco('l')
 for parada in previsao_paradas:
     print('-primeiro for:', parada.nome_parada, '-', parada.codigo_parada)
     for linha in parada.mostrar_linha:

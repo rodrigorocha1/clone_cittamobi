@@ -33,10 +33,14 @@ class ParadaService(ServiceSPTRANS):
             path = '/Previsao/Parada?codigoParada=' + str(parada.codigo_parada)
 
             req = self._sptrans_api.requests_api(path, 'GET')
-            parada = Parada(codigo_parada=req['p']['cp'],
-                            nome_parada=req['p']['np'],
-                            endereco_localizacao=parada.endereco_localizacao,
-                            posicao=Posicao(req['p']['py'], req['p']['px']))
+
+            json_parada = ValidadorJson(req['p'])
+            endereco_localizacao, codigo_parada, nome_parada, posicao = json_parada.validar_json_parada()
+
+            parada = Parada(codigo_parada=codigo_parada,
+                            nome_parada=nome_parada,
+                            endereco_localizacao=endereco_localizacao,
+                            posicao=posicao)
             for req_linha in req['p']['l']:
                 linha = Linha(codigo_identificador=req_linha['cl'],
                               sentido_linha=req_linha['sl'],

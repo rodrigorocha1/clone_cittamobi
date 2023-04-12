@@ -5,5 +5,3 @@ class Posicao:
         self.longitude = longitude
         self.latitude = latitude
 
-    def __str__(self):
-        return [self.latitude, self.longitude]
