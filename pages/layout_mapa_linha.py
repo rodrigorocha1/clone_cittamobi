@@ -4,7 +4,6 @@ from dash import html, dcc, callback, Input, Output, State
 import dash_bootstrap_components as dbc
 import os
 from entidades.mapa import Mapa
-from entidades.linhas import Linha
 from services.linha_service import LinhaService
 
 dash.register_page(__name__, name='Rota Por Linha', path='/')
@@ -31,10 +30,11 @@ class LayoutMapaLinha:
                         dbc.Col(
                             dbc.InputGroup(
                                 [
-                                    dbc.Select(
-                                        [linha for linha in Linha.listagem_linhas()],
+                                    dbc.Input(
+                                        placeholder='Digite o nome do endereço Ex: USP',
                                         id='id_nome_linha',
-                                    ),
+                                    )
+                                    ,
                                     dbc.Button('Pesquisar',
                                                id='id_button_pesquisar_linha',
                                                className="class_input_group_container"

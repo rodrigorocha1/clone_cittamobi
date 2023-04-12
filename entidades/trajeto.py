@@ -21,9 +21,12 @@ class Trajeto:
         :param nome_linha: nome da linha
         :return: Uma lista de posições
         """
-        base_filtrada = self._base_completa.loc[
-            self._base_completa['route_id'] == nome_linha, ['shape_pt_lat', 'shape_pt_lon']]
-        posicoes = base_filtrada.apply(lambda row: Posicao(row['shape_pt_lat'], row['shape_pt_lon']), axis=1).tolist()
+        try:
+            base_filtrada = self._base_completa.loc[
+                self._base_completa['route_id'] == nome_linha, ['shape_pt_lat', 'shape_pt_lon']]
+            posicoes = base_filtrada.apply(lambda row: Posicao(row['shape_pt_lat'], row['shape_pt_lon']), axis=1).tolist()
+        except:
+            posicoes = ['blue']
         return posicoes
 
     def __obter_cor_trajeto(self, nome_linha: str) -> str:

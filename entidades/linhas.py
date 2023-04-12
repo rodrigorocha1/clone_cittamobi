@@ -7,11 +7,6 @@ from typing import List
 
 class Linha:
 
-    @staticmethod
-    def listagem_linhas():
-        base_linhas = pd.read_csv(os.getcwd() + '\\data\\raw\\routes.txt', usecols=['route_id', 'route_long_name'])
-        return base_linhas.apply(lambda linha: linha['route_id'] + ' -- ' + linha['route_long_name'], axis=1).tolist()
-
     def __init__(self, codigo_identificador: int,
                  modo_circular: bool,
                  letreiro_numerico: str,
