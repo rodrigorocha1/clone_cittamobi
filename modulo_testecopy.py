@@ -1,36 +1,31 @@
-from concurrent.futures import ThreadPoolExecutor
-from concurrent.futures import ProcessPoolExecutor
-from requests import get
-from functools import partial
-from os import getpid
+import dash
+import dash_html_components as html
+import dash_leaflet as dl
+from dash.dependencies import Input, Output
 
-l_urls = ['https://google.com'] * 6
+positions = [(-21.1767, -47.8208, "Ribeirão Preto"), (-21.1319, -47.9868, "Sertãozinho")]
+markers = [dl.Marker(dl.Tooltip(city), position=(lat, lon), id=f"marker{i}")
+           for i, (lat, lon, city) in enumerate(positions)]
 
-# executor = ThreadPoolExecutor(max_workers=3)
-# result = executor.map(get, l_urls)
-# print(result)
-
-
-print('Threads')
-with ThreadPoolExecutor(max_workers=3) as executor:
-    """
-    executor.__enter__ -> self (ThreadPoolExecutor)
-    executor.__exit__ -> executor.shutdown(wait=True)
-    """
-    result = executor.map(get, l_urls)
-    print(result)
-
-    print(type(result))
+app = dash.Dash(prevent_initial_callbacks=True)
+app.layout = html.Div([
+    html.Div(dl.Map([dl.TileLayer(), *markers], center=(-21.1544, -47.8208), zoom=11, id="map",
+                    style={'width': '100%', 'height': '80vh', 'margin': "auto", "display": "block"})),
+    html.Div(id='clickdata')
+])
 
 
-# print(list(result))
+# @app.callback(Output("clickdata", "children"),
+#               [Input(marker.id, "n_clicks") for marker in markers])
+# def marker_click(*args):
+#     print('args', args)
+#     print('*args', *args)
+#     print('args', args)
+#
+#     print(dash.callback_context.triggered)
+#     marker_id = dash.callback_context.triggered[0]["prop_id"].split(".")[0]
+#     return f"Hello from {marker_id}!"
 
-# print('Processo')
-# with ProcessPoolExecutor() as executor:
-#     result = executor.map(partial(print, getpid(),))
-#     print(result)
-#     print(type(result))
-#     for r in result:
-#         print(r)
 
-# print(list(result))
+if __name__ == '__main__':
+    app.run_server(debug=True)
