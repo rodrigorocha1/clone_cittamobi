@@ -36,7 +36,9 @@ app.layout = html.Div([
             center=(-23.5505, -46.6333),
             zoom=11,
             id="map",
-            style={'width': '100%', 'height': '80vh', 'margin': "auto", "display": "block"})),
+            style={'width': '100%', 'height': '80vh', 'margin': "auto", "display": "block"}
+        )
+    ),
     html.Div(id='clickdata')
 ])
 #
