@@ -19,7 +19,7 @@ class ParadaService(ServiceSPTRANS):
             lista_paradas = [Parada(*ValidadorJson(parada).validar_json_parada()) for parada in req]
             return lista_paradas
 
-    def buscar_parada_previsao_endereco(self, endereco: str) -> List[Parada]:
+    def buscar_parada_endereco(self, endereco: str) -> List[Parada]:
         path = '/Parada/Buscar?termosBusca=' + endereco
         if self._login():
             req = self._sptrans_api.requests_api(path, 'GET')
