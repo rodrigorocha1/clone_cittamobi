@@ -15,7 +15,6 @@ class APP:
         self.app.layout = self._get_layout()
 
     def _get_layout(self):
-
         return html.Div(
             [
                 dbc.Row(
