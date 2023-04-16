@@ -1,29 +1,32 @@
-from services.parada_service import ParadaService
-from time import time
 
-tempo_inicial = time()
+from dash import Dash, html, dcc
+import plotly.express as px
+import pandas as pd
 
-ps = ParadaService()
-previsao_paradas = ps.buscar_parada_previsao_endereco('USP')
-lista_tupla_parada = []
-for parada in previsao_paradas:
-    print('-CODIGO PARADA:', parada.codigo_parada)
-    print('-NOME PARADA:', parada.nome_parada)
-    print('-END PARADA:', parada.endereco_localizacao)
-    print('-pos PARADA:', parada.posicao.latitude, parada.posicao.longitude)
-    lista_tupla_parada.append(parada)
-    print()
-print(lista_tupla_parada)
-# for linha in parada.mostrar_linha:
-#     print('--CÓDIGO LINHA:', linha.codigo_identificador, '-',
-#           linha.terminal_principal, '-', linha.terminal_secundario)
-#     for onibus in linha.onibus:
-#         print('---PREFIXO:', onibus.prefixo)
-#         print('---PREVISÃO:', onibus.horario_previsto)
-#         print('---ACESSIBILIDADE: ', onibus.acessibiliade)
-#         print()
-# print()
+app = Dash(__name__)
 
-tempo_final = time()
-duracao = round(tempo_final - tempo_inicial, 2)
-print(f'{duracao} Segundos')
+# assume you have a "long-form" data frame
+# see https://plotly.com/python/px-arguments/ for more options
+df = pd.DataFrame({
+    "Fruit": ["Apples", "Oranges", "Bananas", "AAApples", "Oranges", "Bananas"],
+    "Amount": [4, 1, 2, 2, 4, 5],
+    "City": ["SF", "SF", "SF", "Montreal", "Montreal", "Montreal"]
+})
+
+fig = px.bar(df, x="Fruit", y="Amount", color="City", barmode="group")
+
+app.layout = html.Div(children=[
+    html.H1(children='Hello Dash'),
+
+    html.Div(children='''
+        Dash: A web application framework for your data.
+    '''),
+
+    dcc.Graph(
+        id='example-graph',
+        figure=fig
+    )
+])
+
+if __name__ == '__main__':
+    app.run_server(debug=True)

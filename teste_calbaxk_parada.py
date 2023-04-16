@@ -7,23 +7,24 @@ from services.parada_service import ParadaService
 parada_service = ParadaService()
 paradas_endereco = parada_service.buscar_parada_endereco('USP')
 
-print(paradas_endereco)
+# print(paradas_endereco)
 
-markers = [
-    dl.Marker(dl.Tooltip(parada_endereco.codigo_parada),
-              position=(parada_endereco.posicao.latitude, parada_endereco.posicao.longitude),
-              id=f"marker_{parada_endereco.codigo_parada}_")
-    for parada_endereco in paradas_endereco]
+# markers = [
+#     dl.Marker(dl.Tooltip(parada_endereco.codigo_parada),
+#               position=(parada_endereco.posicao.latitude, parada_endereco.posicao.longitude),
+#               id=f"marker_{parada_endereco.codigo_parada}_")
+#     for parada_endereco in paradas_endereco]
 
-print(markers)
+# print(markers)
 
-#
-#
-# positions = [(-21.1767, -47.8208, "Ribeirão Preto"), (-21.1319, -47.9868, "Sertãozinho")]
-# markers = [dl.Marker(dl.Tooltip(city), position=(lat, lon), id=f"marker{i}")
-#            for i, (lat, lon, city) in enumerate(positions)]
-#
-# line = dl.Polyline(positions=[(lat, lon) for lat, lon, _ in positions], color="red")
+
+positions = [(-21.1767, -47.8208, "Ribeirão Preto"),
+             (-21.1319, -47.9868, "Sertãozinho")]
+markers = [dl.Marker(dl.Tooltip(city), position=(lat, lon), id=f"marker{i}")
+           for i, (lat, lon, city) in enumerate(positions)]
+
+line = dl.Polyline(positions=[(lat, lon)
+                   for lat, lon, _ in positions], color="red")
 app = dash.Dash(prevent_initial_callbacks=True)
 app.layout = html.Div([
     html.Div(
@@ -31,12 +32,13 @@ app.layout = html.Div([
             [
                 dl.TileLayer(),
                 *markers,
-                # line
+                line
             ],
-            center=(-23.5505, -46.6333),
+            center=(-21.1767, -47.8208),
             zoom=11,
             id="map",
-            style={'width': '100%', 'height': '80vh', 'margin': "auto", "display": "block"}
+            style={'width': '100%', 'height': '80vh',
+                   'margin': "auto", "display": "block"}
         )
     ),
     html.Div(id='clickdata')
@@ -49,6 +51,8 @@ app.layout = html.Div([
 #
 #
 #
+
+
 @app.callback(Output("clickdata", "children"),
               [Input(marker.id, "n_clicks") for marker in markers])
 def marker_click(*args):
@@ -60,6 +64,8 @@ def marker_click(*args):
     marker_id = dash.callback_context.triggered[0]["prop_id"].split("_")[1]
     print(marker_id, type(marker_id))
     return f"Hello from {marker_id}!"
+
+
 #
 #
 if __name__ == '__main__':
