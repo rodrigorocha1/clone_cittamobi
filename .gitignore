@@ -26,3 +26,4 @@ entidades/__pycache__/onibus.cpython-37.pyc
 entidades/__pycache__/parada.cpython-37.pyc
 entidades/__pycache__/posicao.cpython-37.pyc
 entidades/__pycache__/trajeto.cpython-37.pyc
+.env

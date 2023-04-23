@@ -9,7 +9,10 @@ class ValidadorJson:
 
     def validar_json_parada(self):
 
-        endereco_localizacao = self.json_resposta['ed'] if self.json_resposta.get('ed') is not None  else 'SEM ED'
+        print('validar_json_parada: Validar JSON: ', self.json_resposta)
+
+        endereco_localizacao = self.json_resposta['ed'] if self.json_resposta.get(
+            'ed') is not None else 'SEM ED'
         codigo_parada = self.json_resposta['cp'] if self.json_resposta.get('cp') is not None or len(
             self.json_resposta['cp']) > 0 else 0
         nome_parada = self.json_resposta['np'] if self.json_resposta.get('np') or len(
@@ -24,12 +27,19 @@ class ValidadorJson:
         return acessibiliade, prefixo, posicao
 
     def validar_json_linha(self):
-        codigo_identificador = self.json_resposta['cl'] if self.json_resposta.get('cl') is not None else None
-        modo_circular = self.json_resposta['lc'] if self.json_resposta.get('lc') is not None else None
-        letreiro_numerico = self.json_resposta['lt'] if self.json_resposta.get('lt') is not None else None
-        letreiro_numerico_segunda_parte = self.json_resposta['tl'] if self.json_resposta.get('tl') is not None else None
-        sentido_linha = self.json_resposta['sl'] if self.json_resposta.get('sl') is not None else None
-        terminal_principal = self.json_resposta['tp'] if self.json_resposta.get('tp') is not None else None
-        terminal_secundario = self.json_resposta['ts'] if self.json_resposta.get('ts') is not None else None
+        codigo_identificador = self.json_resposta['cl'] if self.json_resposta.get(
+            'cl') is not None else None
+        modo_circular = self.json_resposta['lc'] if self.json_resposta.get(
+            'lc') is not None else None
+        letreiro_numerico = self.json_resposta['lt'] if self.json_resposta.get(
+            'lt') is not None else None
+        letreiro_numerico_segunda_parte = self.json_resposta['tl'] if self.json_resposta.get(
+            'tl') is not None else None
+        sentido_linha = self.json_resposta['sl'] if self.json_resposta.get(
+            'sl') is not None else None
+        terminal_principal = self.json_resposta['tp'] if self.json_resposta.get(
+            'tp') is not None else None
+        terminal_secundario = self.json_resposta['ts'] if self.json_resposta.get(
+            'ts') is not None else None
         return codigo_identificador, modo_circular, letreiro_numerico, letreiro_numerico_segunda_parte, sentido_linha, \
             terminal_principal, terminal_secundario

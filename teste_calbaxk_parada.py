@@ -9,11 +9,12 @@ paradas_endereco = parada_service.buscar_parada_endereco('USP')
 
 # print(paradas_endereco)
 
-# markers = [
-#     dl.Marker(dl.Tooltip(parada_endereco.codigo_parada),
-#               position=(parada_endereco.posicao.latitude, parada_endereco.posicao.longitude),
-#               id=f"marker_{parada_endereco.codigo_parada}_")
-#     for parada_endereco in paradas_endereco]
+markers = [
+    dl.Marker(dl.Tooltip(parada_endereco.codigo_parada),
+              position=(parada_endereco.posicao.latitude, parada_endereco.posicao.longitude),
+              id=f"marker_{parada_endereco.codigo_parada}_")
+    for parada_endereco in paradas_endereco
+    ]
 
 # print(markers)
 

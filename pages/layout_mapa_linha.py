@@ -33,8 +33,7 @@ class LayoutMapaLinha:
                                     dbc.Input(
                                         placeholder='Digite o nome do endereço Ex: USP',
                                         id='id_nome_linha',
-                                    )
-                                    ,
+                                    ),
                                     dbc.Button('Pesquisar',
                                                id='id_button_pesquisar_linha',
                                                className="class_input_group_container"
@@ -55,7 +54,7 @@ class LayoutMapaLinha:
                                                           encoding='utf-8').read(), width='100%',
                                     height='600'),
                         dcc.Interval(id='interval-component',
-                                     interval=60 * 1000, n_intervals=0)
+                                     interval=10 * 1000, n_intervals=0)
                     ], id='id_mapa_linha'
                 )
             ], id='id_main_div_mapa_linha'

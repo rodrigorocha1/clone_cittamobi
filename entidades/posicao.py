@@ -4,4 +4,3 @@ class Posicao:
         self.horario_captura = horario_captura
         self.longitude = longitude
         self.latitude = latitude
-
