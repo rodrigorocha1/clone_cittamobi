@@ -27,3 +27,6 @@ entidades/__pycache__/parada.cpython-37.pyc
 entidades/__pycache__/posicao.cpython-37.pyc
 entidades/__pycache__/trajeto.cpython-37.pyc
 .env
+__pycache__/teste.cpython-37.pyc
+pages/__pycache__/layout_mapa_linha.cpython-37.pyc
+pages/__pycache__/layout_parada_endereco.cpython-37.pyc

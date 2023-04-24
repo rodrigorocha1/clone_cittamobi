@@ -10,9 +10,6 @@ app = dash.Dash(__name__)
     [dash.dependencies.Input('my-button', 'n_clicks')]
 )
 def update_map(n_clicks):
-    # Crie um objeto `dl.Map` com algumas configurações padrão
-
-    # Retorne o mapa encapsulado em um componente HTML
     return dl.Map(
         [
             dl.TileLayer(),

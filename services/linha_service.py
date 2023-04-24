@@ -14,5 +14,6 @@ class LinhaService(ServiceSPTRANS):
         if self._login():
             req = self._sptrans_api.requests_api(path, 'GET')
             return [Linha(*ValidadorJson(linha).validar_json_linha()) for linha in req]
+
         else:
             pass

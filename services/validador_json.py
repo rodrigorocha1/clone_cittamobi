@@ -9,8 +9,6 @@ class ValidadorJson:
 
     def validar_json_parada(self):
 
-        print('validar_json_parada: Validar JSON: ', self.json_resposta)
-
         endereco_localizacao = self.json_resposta['ed'] if self.json_resposta.get(
             'ed') is not None else 'SEM ED'
         codigo_parada = self.json_resposta['cp'] if self.json_resposta.get('cp') is not None or len(
