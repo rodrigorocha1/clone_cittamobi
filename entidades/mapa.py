@@ -6,6 +6,7 @@ from services.parada_service import ParadaService
 from entidades.parada import Parada
 from typing import List, Tuple
 import os
+import dash_leaflet as dl
 
 
 class Mapa:
@@ -73,6 +74,28 @@ class Mapa:
             self._marcador_mapa(
                 parada.posicao.latitude, parada.posicao.longitude, parada.codigo_parada, icon).add_to(self._mapa)
         self._salvar_mapa('mapa_previsao.html')
+
+    def criar_mapa_previsao_parada(self, lista_paradas: List[Parada]):
+        marcadores_parada = [
+            dl.Marker(
+                dl.Tooltip(parada.nome_parada),
+                position=(
+                    parada.posicao.latitude,
+                    parada.posicao.longitude
+                ),
+                id=f"parada_{parada.codigo_parada}")
+            for parada in (lista_paradas)]
+        return dl.Map(
+            [
+                dl.TileLayer(),
+                *marcadores_parada
+            ],
+            center=(-23.5505, -46.6333),
+            zoom=11,
+            id="map",
+            style={'width': '100%', 'height': '80vh',
+                   'margin': "auto", "display": "block"}
+        )
 
     def __del__(self):
         for nome in os.listdir(self._camino):
