@@ -76,7 +76,6 @@ class LayoutParadaEndereco:
 
         )
         def gerar_mapa(endereco: str, n_clicks):
-            print(endereco)
 
             if n_clicks is None:
                 return dash.no_update
@@ -87,10 +86,8 @@ class LayoutParadaEndereco:
             previsao_paradas = previsao_parada.buscar_parada_endereco(
                 endereco=endereco)
             m = Mapa()
-
             mapa_parada, marcadores = m.criar_mapa_previsao_parada(
                 previsao_paradas)
-
             return mapa_parada
 
 
