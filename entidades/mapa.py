@@ -85,6 +85,7 @@ class Mapa:
                 ),
                 id=f"parada_{parada.codigo_parada}")
             for parada in (lista_paradas)]
+
         return dl.Map(
             [
                 dl.TileLayer(),
@@ -95,7 +96,7 @@ class Mapa:
             id="map",
             style={'width': '100%', 'height': '80vh',
                    'margin': "auto", "display": "block"}
-        ), marcadores_parada
+        )
 
     def __del__(self):
         for nome in os.listdir(self._camino):

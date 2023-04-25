@@ -17,7 +17,7 @@ markers = [
     for parada_endereco in paradas_endereco
 ]
 
-# print(markers)
+
 
 
 # positions = [(-21.1767, -47.8208, "Ribeirão Preto"),

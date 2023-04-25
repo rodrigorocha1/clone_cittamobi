@@ -48,9 +48,11 @@ class LayoutParadaEndereco:
                     [
                         dbc.Col(
                             html.Div(id='my-map'),
+
                             md=8
                         ),
                         dbc.Col(
+                            html.P(id='saida'),
                             id='id_cards_previsoes',
                             md=4
                         ),
@@ -67,22 +69,37 @@ class LayoutParadaEndereco:
             State(component_id='id_nome_endereco', component_property='value'),
             Input(component_id='id_button_pesquisar_previsao',
                   component_property='n_clicks'),
-
         )
-        def gerar_mapa(endereco: str, n_clicks):
-
+        def gerar_mapa_previsoes(endereco: str, n_clicks):
             if n_clicks is None:
-                return dash.no_update
+                return dash.no_update, []
             if endereco is None or len(endereco.strip()) == 0:
-                return dash.no_update
+                return dash.no_update, []
 
             previsao_parada = ParadaService()
             previsao_paradas = previsao_parada.buscar_parada_endereco(
                 endereco=endereco)
             m = Mapa()
-            mapa_parada, marcadores = m.criar_mapa_previsao_parada(
+            mapa_parada = m.criar_mapa_previsao_parada(
                 previsao_paradas)
             return mapa_parada
+        # callback para gerar previsões por paradda
+        # @callback(
+        #     Output('m-saida', 'children'),
+        #     State(component_id='id_nome_endereco', component_property='value'),
+        #     Input(component_id='id_button_pesquisar_previsao',
+        #           component_property='n_clicks'),
+        # )
+        # def gerar_cartoes_previsoes(n_clicks, marcadores):
+        #     print(marcadores)
+        #     if n_clicks is None:
+        #         return dash.no_update
+        #     else:
+        #         return html.Div([
+        #             html.H3('Lista de Marcadores'),
+        #             html.Ul([html.Li(str(marcador))
+        #                     for marcador in marcadores])
+        #         ])
 
 
 lpe = LayoutParadaEndereco()
