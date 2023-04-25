@@ -53,17 +53,12 @@ class LayoutParadaEndereco:
                 dbc.Row(
                     [
                         dbc.Col(
-                            html.Iframe(
-                                id='map_previsao',
-                                srcDoc=open(os.getcwd() + '\\mapas_html\\mapa_previsao.html',
-                                            'r',
-                                            encoding='utf-8').read(), width='100%',
-                                height='600'),
-                            md=10
+                            html.Div(id='my-map'),
+                            md=8
                         ),
                         dbc.Col(
-                            id='id_cards_previsões',
-                            md=2
+                            id='id_cards_previsoes',
+                            md=4
                         ),
                     ]
                 )
@@ -74,13 +69,14 @@ class LayoutParadaEndereco:
     def _calbacks_previsao(self):
 
         @callback(
-            Output(component_id='map_previsao', component_property='srcDoc'),
+            Output('my-map', 'children'),
             State(component_id='id_nome_endereco', component_property='value'),
             Input(component_id='id_button_pesquisar_previsao',
                   component_property='n_clicks'),
 
         )
         def gerar_mapa(endereco: str, n_clicks):
+            print(endereco)
 
             if n_clicks is None:
                 return dash.no_update
@@ -88,13 +84,14 @@ class LayoutParadaEndereco:
                 return dash.no_update
 
             previsao_parada = ParadaService()
-            previsao_paradas = previsao_parada.buscar_parada_previsao_endereco(
+            previsao_paradas = previsao_parada.buscar_parada_endereco(
                 endereco=endereco)
             m = Mapa()
-            print(previsao_paradas)
-            m.criar_mapa_paradas(previsao_paradas)
-            atexit.register(lambda: m.__del__() if m else None)
-            return open(os.getcwd() + '\\mapas_html\\mapa_previsao.html', 'r', encoding='utf-8').read()
+
+            mapa_parada, marcadores = m.criar_mapa_previsao_parada(
+                previsao_paradas)
+
+            return mapa_parada
 
 
 lpe = LayoutParadaEndereco()
