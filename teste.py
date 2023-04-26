@@ -6,6 +6,19 @@ table_header = [
         html.Tr(
             [
                 html.Th(
+                    "Hora última atualização",
+                    colSpan=3,
+                    style={
+                        "text-align": "center"
+                    }
+                )
+            ],
+        )
+    ),
+    html.Thead(
+        html.Tr(
+            [
+                html.Th(
                     "Parada 450011848 - R TERESA MOUCO DE OLIVEIRA/ R AMANCIO PEDRO DE OLIVEIRA - PARADA HOSPITAL CAMPO LIMPO C/B",
                     colSpan=3,
                     style={
