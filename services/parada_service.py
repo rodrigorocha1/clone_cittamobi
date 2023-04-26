@@ -16,14 +16,16 @@ class ParadaService(ServiceSPTRANS):
         path = '/Parada/BuscarParadasPorLinha?codigoLinha=' + str(id_linha)
         if self._login():
             req = self._sptrans_api.requests_api(path, 'GET')
-            lista_paradas = [Parada(*ValidadorJson(parada).validar_json_parada()) for parada in req]
+            lista_paradas = [
+                Parada(*ValidadorJson(parada).validar_json_parada()) for parada in req]
             return lista_paradas
 
     def buscar_parada_endereco(self, endereco: str) -> List[Parada]:
         path = '/Parada/Buscar?termosBusca=' + endereco
         if self._login():
             req = self._sptrans_api.requests_api(path, 'GET')
-            lista_parada = [Parada(*ValidadorJson(parada).validar_json_parada()) for parada in req]
+            lista_parada = [
+                Parada(*ValidadorJson(parada).validar_json_parada()) for parada in req]
             return lista_parada
 
     def buscar_previsao_parada(self, codigo_parada: int) -> List[Linha]:
@@ -50,5 +52,5 @@ class ParadaService(ServiceSPTRANS):
                     posicao=Posicao(req_onibus['py'], req_onibus['px'])
                 )
                 linha.adicionar_onibus(onibus)
-            lista_previsoes.adicionar_linhas(linha)
+            lista_previsoes.append(linha)
         return lista_previsoes
