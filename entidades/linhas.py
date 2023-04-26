@@ -15,6 +15,7 @@ class Linha:
                  terminal_principal: str,
                  terminal_secundario: str,
                  quantidade_veiculos=0) -> None:
+
         self.codigo_identificador = codigo_identificador
         self.modo_circular = modo_circular
         self.letreiro_numerico = letreiro_numerico
@@ -26,6 +27,7 @@ class Linha:
         self.__onibus = []
         self.trajeto = Trajeto(self.letreiro_numerico + '-' +
                                str(self.letreiro_numerico_segunda_parte))
+                               
 
     def adicionar_onibus(self, onibus: Onibus) -> None:
         self.__onibus.append(onibus)
