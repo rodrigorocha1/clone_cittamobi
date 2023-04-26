@@ -1,35 +1,97 @@
-import dash
-import dash_leaflet as dl
-import dash_html_components as html
+from dash import Dash, html
+import dash_bootstrap_components as dbc
 
-app = dash.Dash(__name__)
-
-
-@app.callback(
-    dash.dependencies.Output('my-map', 'children'),
-    [dash.dependencies.Input('my-button', 'n_clicks')]
-)
-def update_map(n_clicks):
-    # Crie um objeto `dl.Map` com algumas configurações padrão
-
-    # Retorne o mapa encapsulado em um componente HTML
-    return dl.Map(
-        [
-            dl.TileLayer(),
-            # line
-        ],
-        center=(-23.5505, -46.6333),
-        zoom=11,
-        id="map",
-        style={'width': '100%', 'height': '80vh', 'margin': "auto", "display": "block"}
+table_header = [
+    html.Thead(
+        html.Tr(
+            [
+                html.Th(
+                    "Parada 450011848 - R TERESA MOUCO DE OLIVEIRA/ R AMANCIO PEDRO DE OLIVEIRA - PARADA HOSPITAL CAMPO LIMPO C/B",
+                    colSpan=3,
+                    style={
+                        "text-align": "center"
+                    }
+                )
+            ],
+        )
+    ),
+    html.Thead(
+        html.Tr(
+            [
+                html.Th(
+                    "6450 10 TERM. BANDEIRA - TERM. CAPELINHA",
+                    colSpan=3,
+                    style={"text-align": "center"}
+                )
+            ],
+        )
+    ),
+    html.Thead(
+        html.Tr(
+            [
+                html.Th(
+                    "Prefixo ônibus",
+                ),
+                html.Th(
+                    "Previsão Chegada",
+                ),
+                html.Th(
+                    "Minutos Faltando",
+                ),
+            ],
+        )
     )
+]
 
+row1 = html.Tr([html.Td("Arthur"), html.Td("Dent"),  html.Td("Dent")])
 
-# Crie uma página com um botão para atualizar o mapa
+table_body = [html.Tbody([row1])]
+
+table = dbc.Table(table_header + table_body, bordered=True)
+app = Dash(__name__,
+           external_stylesheets=[dbc.themes.BOOTSTRAP])
+
 app.layout = html.Div([
-    html.Button('Atualizar Mapa', id='my-button'),
-    html.Div(id='my-map')
+    html.Div(
+        [
+            dbc.Row(
+                '     linha 1',
+                style={'color': 'black'}
+            ),
+            dbc.Row(
+                [
+                    dbc.Col(
+                        '1 coluna',
+                        style={'color': 'black'},
+                        md=8
+                    ),
+                    dbc.Col(
+                        [
+                            html.Div(
+                                [
+                                    dbc.Row(
+                                        table
+                                    )
+                                    for i in range(1, 10)
+                                ],
+                                style={
+                                    'color': 'black',
+                                    'overflow-y': 'scroll',
+                                    'height': '100%'
+                                }
+                            ),
+
+                        ],
+                        style={'height': '800px'},
+
+                        md=4
+                    )
+                ]
+            )
+        ]
+    )
 ])
 
+
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run(debug=True)
