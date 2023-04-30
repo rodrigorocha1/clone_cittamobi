@@ -21,14 +21,17 @@ diferenca_minutos = diferenca.seconds // 60
 # print(diferenca)
 
 parada_service = ParadaService()
-paradas = parada_service.buscar_parada_endereco(endereco='USP')
+paradas = parada_service.buscar_parada_endereco(endereco='Morumbi')
 
 codigo_parada = [parada.codigo_parada for parada in paradas]
 
 
 previsoes_parada = parada_service.buscar_previsao_parada(
     codigos_parada=codigo_parada)
-print(previsoes_parada)
+
+
+a = [previsao.onibus for previsao in previsoes_parada]
+print(a)
 
 # for parada in paradas:
 #     print('-', parada.codigo_parada, '-',

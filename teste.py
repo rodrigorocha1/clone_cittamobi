@@ -44,29 +44,8 @@ def gera_tabela_cabecalho(lista_parada: List[Parada]):
             )
         ) for parada in lista_parada
     ]
-    codigo_parada = [parada.codigo_parada for parada in paradas]
 
-    previsoes_parada = parada_service.buscar_previsao_parada(
-        codigos_parada=codigo_parada)
-    tabela_cabecalho_linha = [
-        html.Thead(
-            html.Tr(
-                [
-                    html.Th(
-                        f'{previsao.letreiro_numerico} - {previsao.letreiro_numerico_segunda_parte} \
-                        - {previsao.terminal_principal}  - {previsao.terminal_secundario}',
-                        style={
-                            'text-align': 'center',
-                            'font-size': '12px',
-                            'width': '30%'
-                        }
-                    )
-                ],
-            )
-        ) for previsao in previsoes_parada
-    ]
-
-    return tabela_cabecalho_hora + tabela_cabecalho_parada + tabela_cabecalho_linha
+    return tabela_cabecalho_hora + tabela_cabecalho_parada
 
 
 def gerar_tabela_completa(lista_parada: List[Parada]):
@@ -75,7 +54,12 @@ def gerar_tabela_completa(lista_parada: List[Parada]):
     return cabecalho
 
 
-def gerar_linhas_previsoes(previsao):
+def gerar_linhas_previsoes(lista_parada: List[Parada]):
+
+    codigo_parada = [parada.codigo_parada for parada in lista_parada]
+
+    previsoes_parada = parada_service.buscar_previsao_parada(
+        codigos_parada=codigo_parada)
 
     table_body = [
         html.Tbody(
@@ -83,13 +67,20 @@ def gerar_linhas_previsoes(previsao):
                 html.Tr(
                     [
                         html.Td(
-                            'Arthur',
+                            f'{previsoes.letreiro_numerico} - {previsoes.letreiro_numerico_segunda_parte} | '
+                            f'{previsoes.terminal_principal} - {previsoes.terminal_secundario}',
+                            style={
+                                'font-size': '12px'
+                            }
+                        ),
+                        html.Td(
+                            f'{"".join(onibus for onibus in previsoes)}',
                             style={
                                 'font-size': '12px'
                             }
                         )
                     ]
-                )
+                ) for previsoes in previsoes_parada
             ]
         )
     ]
