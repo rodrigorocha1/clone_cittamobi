@@ -10,76 +10,13 @@ parada_service = ParadaService()
 paradas = parada_service.buscar_parada_endereco(endereco='USP')
 
 
-def gerar_linha_previsao_onibus(lista_onibus: List[Onibus]):
-    linha_onibus = html.Tr(
-        [
-            html.Td(
-                f'{onibus.numero_linha} - {onibus.letreiro_numerico}',
-                style={'font-size': '12px'}
-            ),
-            html.Td(
-                onibus.terminal_principal,
-                style={'font-size': '12px'}
-            ),
-            html.Td(
-                onibus.terminal_secundario,
-                style={'font-size': '12px'}
-            )
-        ] for onibus in lista_onibus
-    )
-    return linha_onibus
-
-
-def gerar_tabela(parada: Parada):
-    table_header_parada = [
-        html.Thead(
-            html.Tr(
-                [
-                    html.Th(
-                        f'Parada {parada.codigo_parada} - Endereço {parada.endereco_localizacao} - Nome {parada.nome_parada}',
-                        colSpan=3,
-                        style={
-                            'text-align': 'center',
-                            'font-size': '12px',
-                            'width': '50%',
-                        }
-                    )
-                ],
-            )
-        )
-    ]
-
-    previsoes_linha = parada_service.buscar_previsao_parada(
-        parada.codigo_parada)
-
-    table_header_previsao = [
-        html.Thead(
-            html.Tr(
-                [
-                    html.Th(
-                        f'{previsao_linha.codigo_identificador} -  {previsao_linha.letreiro_numerico} - '
-                        f'{previsao_linha.letreiro_numerico_segunda_parte} - {previsao_linha.terminal_principal} - {previsao_linha.terminal_secundario} ',
-                        colSpan=3,
-                        style={
-                            'text-align': 'center',
-                            'font-size': '12px',
-                            'width': '50%',
-                        }
-                    )
-                ],
-            )
-        ) for previsao_linha in previsoes_linha
-    ]
-
-
-def gerar_tabelas_cabecalho(lista_parada: List[Parada]):
-    cabecalho_hora_atualizacao = [
+def gera_tabela_cabecalho(lista_parada: List[Parada]):
+    tabela_cabecalho_hora = [
         html.Thead(
             html.Tr(
                 [
                     html.Th(
                         'Hora última atualização',
-                        colSpan=3,
                         style={
                             'text-align': 'center',
                             'font-size': '12px',
@@ -91,18 +28,71 @@ def gerar_tabelas_cabecalho(lista_parada: List[Parada]):
         )
     ]
 
-    table_header = gerar_tabela([parada for parada in lista_parada])
+    tabela_cabecalho_parada = [
+        html.Thead(
+            html.Tr(
+                [
+                    html.Th(
+                        f'{parada.codigo_parada} - {parada.endereco_localizacao} - {parada.nome_parada}',
+                        style={
+                            'text-align': 'center',
+                            'font-size': '12px',
+                            'width': '30%'
+                        }
+                    )
+                ],
+            )
+        ) for parada in lista_parada
+    ]
+    codigo_parada = [parada.codigo_parada for parada in paradas]
 
-    table_body = [html.Tbody([row1])]
+    previsoes_parada = parada_service.buscar_previsao_parada(
+        codigos_parada=codigo_parada)
+    tabela_cabecalho_linha = [
+        html.Thead(
+            html.Tr(
+                [
+                    html.Th(
+                        f'{previsao.letreiro_numerico} - {previsao.letreiro_numerico_segunda_parte} \
+                        - {previsao.terminal_principal}  - {previsao.terminal_secundario}',
+                        style={
+                            'text-align': 'center',
+                            'font-size': '12px',
+                            'width': '30%'
+                        }
+                    )
+                ],
+            )
+        ) for previsao in previsoes_parada
+    ]
 
-    table = dbc.Table(cabecalho_hora_atualizacao + table_header + table_body,
-                      bordered=True,
-                      hover=True,
-                      responsive=True)
-    return table
+    return tabela_cabecalho_hora + tabela_cabecalho_parada + tabela_cabecalho_linha
 
 
-def gerar_previsao_linhas(linha: Linha):
+def gerar_tabela_completa(lista_parada: List[Parada]):
+    cabecalho = gera_tabela_cabecalho(lista_parada)
+    linhas = gerar_linhas_previsoes(None)
+    return cabecalho
+
+
+def gerar_linhas_previsoes(previsao):
+
+    table_body = [
+        html.Tbody(
+            [
+                html.Tr(
+                    [
+                        html.Td(
+                            'Arthur',
+                            style={
+                                'font-size': '12px'
+                            }
+                        )
+                    ]
+                )
+            ]
+        )
+    ]
     pass
 
 
@@ -112,7 +102,6 @@ table_header = [
             [
                 html.Th(
                     'Hora última atualização',
-                    colSpan=3,
                     style={
                         'text-align': 'center',
                         'font-size': '12px',
@@ -127,7 +116,7 @@ table_header = [
             [
                 html.Th(
                     'Parada 450011848 - R TERESA MOUCO DE OLIVEIRA/ R AMANCIO PEDRO DE OLIVEIRA - PARADA HOSPITAL CAMPO LIMPO C/B',
-                    colSpan=3,
+
                     style={
                         'text-align': 'center',
                         'font-size': '12px',
@@ -142,36 +131,26 @@ table_header = [
             [
                 html.Th(
                     '6450 10 TERM. BANDEIRA - TERM. CAPELINHA',
-                    colSpan=3,
+
                     style={'text-align': 'center',
                            'font-size': '12px',
                            'width': '50%'}
                 )
             ],
         )
-    ),
-    html.Thead(
-        html.Tr(
-            [
-                html.Th(
-                    'Prefixo ônibus',
-                    style={'font-size': '12px'}
-                ),
-                html.Th(
-                    'Previsão Chegada',
-                    style={'font-size': '12px'}
-                ),
-                html.Th(
-                    'Minutos Faltando',
-                    style={'font-size': '12px'}
-                ),
-            ],
-        )
     )
 ]
 
-row1 = html.Tr([html.Td('Arthur', style={'font-size': '12px'}), html.Td(
-    'Dent', style={'font-size': '12px'}),  html.Td('Dent', style={'font-size': '12px'})])
+row1 = html.Tr(
+    [
+        html.Td(
+            'Arthur',
+            style={
+                'font-size': '12px'
+            }
+        )
+    ]
+)
 
 table_body = [html.Tbody([row1])]
 
@@ -202,13 +181,14 @@ app.layout = html.Div([
                             html.Div(
                                 [
                                     dbc.Row(
-                                        gerar_tabelas_cabecalho(paradas)
+                                        gerar_tabela_completa(paradas)
                                     )
 
                                 ],
                                 style={
                                     'color': 'black',
                                     'overflow-y': 'scroll',
+                                    'overflow-x': 'hidden',
                                     'height': '100%'
                                 }
                             ),
