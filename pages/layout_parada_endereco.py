@@ -1,10 +1,13 @@
 import dash
-from dash import html, dcc, callback, Input, Output, State
+from dash import html, callback, Input, Output, State
 import dash_bootstrap_components as dbc
-import os
-import atexit
+from typing import List
 from services.parada_service import ParadaService
 from entidades.mapa import Mapa
+from entidades.parada import Parada
+from entidades.linhas import Linha
+from entidades.onibus import Onibus
+import datetime
 
 dash.register_page(__name__, name='Parada por Endereços')
 
@@ -15,6 +18,92 @@ class LayoutParadaEndereco:
 
         self.tela = self._get_layout()
         self._calbacks_previsao()
+
+    def _gerar_diferenca_minutos(self, horario: str):
+        hora2 = datetime.datetime.strptime(horario, '%H:%M').time()
+        diferenca = datetime.datetime.combine(datetime.date.today(
+        ), hora2) - datetime.datetime.combine(datetime.date.today(), horario)
+        diferenca_minutos = diferenca.seconds // 60
+        return diferenca_minutos
+
+    def _gerar_cabecalho_tabela_parada(self, lista_paradas: List[Parada]):
+        table_header = [
+            html.Thead(
+                html.Tr(
+                    [
+                        html.Th(
+                            f'Código {parada.codigo_parada}, - {parada.endereco_localizacao} - {parada.nome_parada}',
+                            colSpan=3,
+                            style={
+                                "text-align": "center",
+                                'font-size': '12px',
+                                'width': '30%'
+                            }
+                        )
+                    ],
+                )
+            )
+            for parada in lista_paradas
+        ]
+        return table_header
+
+    def _gerar_tabelas_titulo(self, lista_linha: List[Linha]):
+        table_header = [
+            html.Thead(
+                html.Tr(
+                    [
+                        html.Th(
+
+                            html.Th(
+                                f'{linha.codigo_identificador} - {linha.terminal_principal} - {linha.terminal_secundario}',
+                                colSpan=3,
+                                style={"text-align": "center",
+                                       'font-size': '12px',
+                                       'width': '30%'}
+                            )
+                        )
+                    ]
+                )
+            ) for linha in lista_linha
+        ]
+
+        return table_header
+
+    def _gerar_tabela_onibus(self, lista_onibus: List[Onibus]):
+        TITULOS_CABECALHO = ['Prefixo ônibus',
+                             'Previsão Chegada', 'Minutos Faltando']
+
+        cabecalho = [
+            html.Thead(
+                html.Tr(
+                    [
+                        html.Th(
+
+                            html.Th(
+                                f'{titulos_cabecalho}',
+                                colSpan=3,
+                                style={"text-align": "center",
+                                       'font-size': '12px',
+                                       'width': '30%'}
+                            )
+                        )
+                    ]
+                )
+            ) for titulos_cabecalho in TITULOS_CABECALHO
+        ]
+
+        linha = html.Tr(
+            [
+                html.Td(
+                    f'{onibus.prefixo} - {onibus.horario_previsto}',
+                    style={
+                        'font-size': '12px'
+                    }
+                ) for onibus in lista_onibus
+            ]
+        )
+
+        return linha, cabecalho
 
     def _get_layout(self):
         return html.Div(
