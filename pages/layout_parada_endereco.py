@@ -43,7 +43,7 @@ class LayoutParadaEndereco:
                        ),
                 *[
                     html.P(
-                        f'{onibus.prefixo} {onibus.horario_previsto} - {self._gerar_diferenca_minutos(onibus.horario_previsto)} min',
+                        f'{onibus.prefixo} | {onibus.horario_previsto} | {self._gerar_diferenca_minutos(onibus.horario_previsto)} min ',
                         id=f'id_info_onibus_{onibus.prefixo}',
                         className='class_info_onibus'
 
@@ -64,12 +64,7 @@ class LayoutParadaEndereco:
         card = dbc.Card(
             [
                 dbc.CardHeader(
-                    f'Última atualizacao: {self._hora_atual}',
-                    id=f'id_cardheader_horario_atualizacao',
-                    className=f'cardheader_horario_atualizaca'
-                ),
-                dbc.CardHeader(
-                    f'{parada.codigo_parada} - {parada.endereco_localizacao} - {parada.nome_parada} ',
+                    f'{parada.codigo_parada} - {parada.endereco_localizacao} - {parada.nome_parada}',
                     id=f'id_cardheader_parada_{parada}',
                     className=f'classheader_parada'
                 ),
@@ -123,12 +118,21 @@ class LayoutParadaEndereco:
                             md=8
                         ),
                         dbc.Col(
-                            html.P(id='saida'),
+                            [
+                                html.P(style={
+                                    'color': 'black'
+                                },
+                                    id='teste_tempo'
+                                ),
+                                html.P(id='saida'),
+                            ],
                             id='id_cards_previsoes',
                             md=4
                         ),
-                        dcc.Interval(id='interval-component',
-                                     interval=10 * 1000, n_intervals=0)
+                        dcc.Interval(
+                            id='interval-component',
+                            interval=10 * 1000,
+                            n_intervals=0)
                     ]
                 )
             ],
@@ -136,6 +140,13 @@ class LayoutParadaEndereco:
         )
 
     def _calbacks_previsao(self):
+        @callback(
+            Output(component_id='teste_tempo', component_property='children'),
+            [Input(component_id='interval-component',
+                   component_property='n_intervals')]
+        )
+        def update_time(n):
+            return 'Última atualização: ' + str(datetime.datetime.now().time().strftime('%H:%M'))
 
         @callback(
             Output('my-map', 'children'),
@@ -156,14 +167,16 @@ class LayoutParadaEndereco:
             mapa_parada = m.criar_mapa_previsao_parada(
                 previsao_paradas)
             return mapa_parada
-        # callback para gerar previsões por paradda
 
         @callback(
-            Output('saida', 'children'),
-            State(component_id='id_nome_endereco', component_property='value'),
+            Output(component_id='saida',
+                   component_property='children'),
+            State(component_id='id_nome_endereco',
+                  component_property='value'),
             Input(component_id='id_button_pesquisar_previsao',
                   component_property='n_clicks'),
-            Input('interval-component', 'n_intervals')
+            Input(component_id='interval-component',
+                  component_property='n_intervals')
         )
         def gerar_cartoes_previsoes(endereco: str, n_clicks, n_intervals):
             if n_clicks is None or n_intervals == 0:
