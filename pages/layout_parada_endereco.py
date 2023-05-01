@@ -15,16 +15,15 @@ dash.register_page(__name__, name='Parada por Endereços')
 
 class LayoutParadaEndereco:
 
+    _hora_atual = datetime.datetime.now().time().strftime('%H:%M')
+
     def __init__(self):
 
         self.tela = self._get_layout()
         self._calbacks_previsao()
 
     def _gerar_diferenca_minutos(self, hora_str: str) -> int:
-
-        hora_atual = datetime.datetime.now().time()
-        hora_atual_str = hora_atual.strftime('%H:%M')
-        hora1 = datetime.datetime.strptime(hora_atual_str, '%H:%M').time()
+        hora1 = datetime.datetime.strptime(self._hora_atual, '%H:%M').time()
         hora2 = datetime.datetime.strptime(hora_str, '%H:%M').time()
         diferenca = datetime.datetime.combine(datetime.date.today(
         ), hora2) - datetime.datetime.combine(datetime.date.today(), hora1)
@@ -36,8 +35,9 @@ class LayoutParadaEndereco:
 
         linhas = html.Div(
             [
+
                 html.P(f'{linha_previsao_parada.letreiro_numerico} - {linha_previsao_parada.letreiro_numerico_segunda_parte} - '
-                       f'{linha_previsao_parada.terminal_principal} - {linha_previsao_parada.terminal_secundario}',
+                       f'{linha_previsao_parada.terminal_principal} - {linha_previsao_parada.terminal_secundario} ',
                        id=f'id_info_linha_{linha_previsao_parada.codigo_identificador}',
                        className='class_info_linha'
                        ),
@@ -64,7 +64,12 @@ class LayoutParadaEndereco:
         card = dbc.Card(
             [
                 dbc.CardHeader(
-                    f'{parada.codigo_parada} - {parada.endereco_localizacao} - {parada.nome_parada} - []',
+                    f'Última atualizacao: {self._hora_atual}',
+                    id=f'id_cardheader_horario_atualizacao',
+                    className=f'cardheader_horario_atualizaca'
+                ),
+                dbc.CardHeader(
+                    f'{parada.codigo_parada} - {parada.endereco_localizacao} - {parada.nome_parada} ',
                     id=f'id_cardheader_parada_{parada}',
                     className=f'classheader_parada'
                 ),
