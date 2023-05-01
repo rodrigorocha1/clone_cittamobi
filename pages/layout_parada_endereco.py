@@ -1,5 +1,5 @@
 import dash
-from dash import html, callback, Input, Output, State
+from dash import html, callback, Input, Output, State, dcc
 import dash_bootstrap_components as dbc
 from typing import List
 from services.parada_service import ParadaService
@@ -8,6 +8,7 @@ from entidades.parada import Parada
 from entidades.linhas import Linha
 from entidades.onibus import Onibus
 import datetime
+
 
 dash.register_page(__name__, name='Parada por Endereços')
 
@@ -19,91 +20,67 @@ class LayoutParadaEndereco:
         self.tela = self._get_layout()
         self._calbacks_previsao()
 
-    def _gerar_diferenca_minutos(self, horario: str):
-        hora2 = datetime.datetime.strptime(horario, '%H:%M').time()
+    def _gerar_diferenca_minutos(self, hora_str: str) -> int:
+
+        hora_atual = datetime.datetime.now().time()
+        hora_atual_str = hora_atual.strftime('%H:%M')
+        hora1 = datetime.datetime.strptime(hora_atual_str, '%H:%M').time()
+        hora2 = datetime.datetime.strptime(hora_str, '%H:%M').time()
         diferenca = datetime.datetime.combine(datetime.date.today(
-        ), hora2) - datetime.datetime.combine(datetime.date.today(), horario)
+        ), hora2) - datetime.datetime.combine(datetime.date.today(), hora1)
         diferenca_minutos = diferenca.seconds // 60
+
         return diferenca_minutos
 
-    def _gerar_cabecalho_tabela_parada(self, lista_paradas: List[Parada]):
-        table_header = [
-            html.Thead(
-                html.Tr(
-                    [
-                        html.Th(
-                            f'Código {parada.codigo_parada}, - {parada.endereco_localizacao} - {parada.nome_parada}',
-                            colSpan=3,
-                            style={
-                                "text-align": "center",
-                                'font-size': '12px',
-                                'width': '30%'
-                            }
-                        )
-                    ],
-                )
-            )
-            for parada in lista_paradas
-        ]
-        return table_header
+    def _gerar_previsoes_linha(self, linha_previsao_parada: Linha):
 
-    def _gerar_tabelas_titulo(self, lista_linha: List[Linha]):
-        table_header = [
-            html.Thead(
-                html.Tr(
-                    [
-                        html.Th(
-
-                            html.Th(
-                                f'{linha.codigo_identificador} - {linha.terminal_principal} - {linha.terminal_secundario}',
-                                colSpan=3,
-                                style={"text-align": "center",
-                                       'font-size': '12px',
-                                       'width': '30%'}
-                            )
-                        )
-                    ]
-                )
-            ) for linha in lista_linha
-        ]
-
-        return table_header
-
-    def _gerar_tabela_onibus(self, lista_onibus: List[Onibus]):
-        TITULOS_CABECALHO = ['Prefixo ônibus',
-                             'Previsão Chegada', 'Minutos Faltando']
-
-        cabecalho = [
-            html.Thead(
-                html.Tr(
-                    [
-                        html.Th(
-
-                            html.Th(
-                                f'{titulos_cabecalho}',
-                                colSpan=3,
-                                style={"text-align": "center",
-                                       'font-size': '12px',
-                                       'width': '30%'}
-                            )
-                        )
-                    ]
-                )
-            ) for titulos_cabecalho in TITULOS_CABECALHO
-        ]
-
-        linha = html.Tr(
+        linhas = html.Div(
             [
-                html.Td(
-                    f'{onibus.prefixo} - {onibus.horario_previsto}',
-                    style={
-                        'font-size': '12px'
-                    }
-                ) for onibus in lista_onibus
-            ]
-        )
+                html.P(f'{linha_previsao_parada.letreiro_numerico} - {linha_previsao_parada.letreiro_numerico_segunda_parte} - '
+                       f'{linha_previsao_parada.terminal_principal} - {linha_previsao_parada.terminal_secundario}',
+                       id=f'id_info_linha_{linha_previsao_parada.codigo_identificador}',
+                       className='class_info_linha'
+                       ),
+                *[
+                    html.P(
+                        f'{onibus.prefixo} {onibus.horario_previsto} - {self._gerar_diferenca_minutos(onibus.horario_previsto)} min',
+                        id=f'id_info_onibus_{onibus.prefixo}',
+                        className='class_info_onibus'
 
-        return linha, cabecalho
+                    )
+                    for onibus in linha_previsao_parada.onibus
+                ],
+                html.Br()
+            ], id=f'id_previsao_linha_{linha_previsao_parada.codigo_identificador}',
+            className='class_previsao_linha'
+        )
+        return linhas
+
+    def _gerar_cartao(self, parada: Parada):
+        parada_service = ParadaService()
+        linha_previsoes_parada = parada_service.buscar_previsao_parada(
+            codigo_parada=parada.codigo_parada)
+
+        card = dbc.Card(
+            [
+                dbc.CardHeader(
+                    f'{parada.codigo_parada} - {parada.endereco_localizacao} - {parada.nome_parada} - []',
+                    id=f'id_cardheader_parada_{parada}',
+                    className=f'classheader_parada'
+                ),
+                dbc.CardBody(
+                    [
+                        self._gerar_previsoes_linha(linha_previsao_parada)
+                        for linha_previsao_parada in linha_previsoes_parada
+                    ], id=f'id_cardbody_parada_{parada.codigo_parada}',
+                    className='class_cardbody_parada'
+                )
+
+            ],
+            id=f'id_card_parada_{parada.codigo_parada}',
+            className='class_paradas'
+        )
+        return card
 
     def _get_layout(self):
         return html.Div(
@@ -145,6 +122,8 @@ class LayoutParadaEndereco:
                             id='id_cards_previsoes',
                             md=4
                         ),
+                        dcc.Interval(id='interval-component',
+                                     interval=10 * 1000, n_intervals=0)
                     ]
                 )
             ],
@@ -179,20 +158,39 @@ class LayoutParadaEndereco:
             State(component_id='id_nome_endereco', component_property='value'),
             Input(component_id='id_button_pesquisar_previsao',
                   component_property='n_clicks'),
+            Input('interval-component', 'n_intervals')
         )
-        def gerar_cartoes_previsoes(endereco: str, n_clicks):
-            if n_clicks is None:
+        def gerar_cartoes_previsoes(endereco: str, n_clicks, n_intervals):
+            if n_clicks is None or n_intervals == 0:
                 return dash.no_update
             if endereco is None or len(endereco.strip()) == 0:
-                return dash.no_update,
-
-            previsao_parada = ParadaService()
-            paradas_end = previsao_parada.buscar_parada_endereco(
+                return dash.no_update
+            parada_service = ParadaService()
+            lista_parada = parada_service.buscar_parada_endereco(
                 endereco=endereco)
 
-            previsao_parada_end = map(previsao_parada.buscar_previsao_parada, str(' '.join([
-                                      parada_end.codigo_parada for parada_end in paradas_end])))
-            return previsao_parada_end
+            layout_cartoes_previsao = html.Div(
+                [
+                    dbc.Row(
+                        self._gerar_cartao(parada),
+                        id=f'id_linha_parada_{parada.codigo_parada}',
+                        class_name='class_linha_paradas',
+                        style={'margin-top': '10px'}
+                    ) for parada in lista_parada
+
+                ],
+                style={
+                    'color': 'black',
+                    'overflow-y': 'scroll',
+                    'overflow-x': 'hidden',
+
+                    'height': '100%'
+                },
+                id='id_main_div_paradas',
+                className='class_card_paradas'
+            )
+
+            return layout_cartoes_previsao
 
 
 lpe = LayoutParadaEndereco()

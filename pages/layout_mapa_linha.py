@@ -53,8 +53,9 @@ class LayoutMapaLinha:
                                                           'r',
                                                           encoding='utf-8').read(), width='100%',
                                     height='600'),
-                        dcc.Interval(id='interval-component',
-                                     interval=10 * 1000, n_intervals=0)
+                        dcc.Interval(id='interval_component_previsao',
+                                     interval=30 * 1000, 
+                                     n_intervals=0)
                     ], id='id_mapa_linha'
                 )
             ], id='id_main_div_mapa_linha'
@@ -67,7 +68,7 @@ class LayoutMapaLinha:
             State(component_id='id_nome_linha', component_property='value'),
             Input(component_id='id_button_pesquisar_linha',
                   component_property='n_clicks'),
-            Input('interval-component', 'n_intervals')
+            Input('interval_component_previsao', 'n_intervals')
         )
         def gerar_mapa(linha: str, n_clicks, n_intervals):
             print(linha, n_clicks, n_intervals)
