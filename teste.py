@@ -39,7 +39,7 @@ def gera_tabela_cabecalho(lista_parada: List[Parada]):
                             'font-size': '12px',
                             'width': '30%'
                         }
-                    )
+                    ),
                 ],
             )
         ) for parada in lista_parada
@@ -50,7 +50,7 @@ def gera_tabela_cabecalho(lista_parada: List[Parada]):
 
 def gerar_tabela_completa(lista_parada: List[Parada]):
     cabecalho = gera_tabela_cabecalho(lista_parada)
-    linhas = gerar_linhas_previsoes(None)
+    # linhas = gerar_linhas_previsoes(None)
     return cabecalho
 
 
@@ -145,55 +145,59 @@ row1 = html.Tr(
 
 table_body = [html.Tbody([row1])]
 
-table = dbc.Table(table_header + table_body,
-                  bordered=True,
-                  hover=True,
-                  responsive=True)
+table = dbc.Table(
+    gera_tabela_cabecalho(paradas) + table_body,
+    bordered=True,
+    hover=True,
+    responsive=True
+)
+
 app = Dash(__name__,
            external_stylesheets=[dbc.themes.BOOTSTRAP])
 
-app.layout = html.Div([
-    html.Div(
-        [
-            dbc.Row(
-                '     linha 1',
-                style={'color': 'black',
-                       'font-size': '12px'}
-            ),
-            dbc.Row(
-                [
-                    dbc.Col(
-                        '1 coluna',
-                        style={'color': 'black', 'font-size': '12px'},
-                        md=7
-                    ),
-                    dbc.Col(
-                        [
-                            html.Div(
-                                [
-                                    dbc.Row(
-                                        gerar_tabela_completa(paradas)
-                                    )
+app.layout = html.Div(
+    [
+        html.Div(
+            [
+                dbc.Row(
+                    '     linha 1',
+                    style={'color': 'black',
+                           'font-size': '12px'}
+                ),
+                dbc.Row(
+                    [
+                        dbc.Col(
+                            '1 coluna',
+                            style={'color': 'black', 'font-size': '12px'},
+                            md=7
+                        ),
+                        dbc.Col(
+                            [
+                                html.Div(
+                                    [
+                                        dbc.Row(
+                                            table
+                                        )
 
-                                ],
-                                style={
-                                    'color': 'black',
-                                    'overflow-y': 'scroll',
-                                    'overflow-x': 'hidden',
-                                    'height': '100%'
-                                }
-                            ),
+                                    ],
+                                    style={
+                                        'color': 'black',
+                                        'overflow-y': 'scroll',
+                                        'overflow-x': 'hidden',
+                                        'height': '100%'
+                                    }
+                                ),
 
-                        ],
-                        style={'height': '800px'},
-
-                        md=5
-                    )
-                ]
-            )
-        ]
-    )
-])
+                            ],
+                            style={'height': '800px'},
+                            md=5
+                        )
+                    ]
+                )
+            ]
+        )
+    ]
+)
 
 
 if __name__ == '__main__':
