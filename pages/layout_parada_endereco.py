@@ -179,7 +179,7 @@ class LayoutParadaEndereco:
                   component_property='n_intervals')
         )
         def gerar_cartoes_previsoes(endereco: str, n_clicks, n_intervals):
-            if n_clicks is None or n_intervals == 0:
+            if n_clicks is None and n_intervals == 0:
                 return dash.no_update
             if endereco is None or len(endereco.strip()) == 0:
                 return dash.no_update
