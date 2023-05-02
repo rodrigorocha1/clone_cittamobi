@@ -131,7 +131,7 @@ class LayoutParadaEndereco:
                         ),
                         dcc.Interval(
                             id='interval-component',
-                            interval=60 * 1000,
+                            interval=30 * 1000,
                             n_intervals=0)
                     ]
                 )

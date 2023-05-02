@@ -54,7 +54,7 @@ class LayoutMapaLinha:
                                                           encoding='utf-8').read(), width='100%',
                                     height='600'),
                         dcc.Interval(id='interval_component_previsao',
-                                     interval=60 * 1000,
+                                     interval=30 * 1000,
                                      n_intervals=0)
                     ], id='id_mapa_linha'
                 )
