@@ -12,24 +12,62 @@ import dash_leaflet as dl
 class Mapa:
 
     def __init__(self):
+        """Classe para desenhar o mapa
+        """
         self._mapa = None
         self._camino = os.getcwd() + '\\mapas_html\\'
 
     def _criar_mapa(self, latitude: float, longitude: float):
+        """Método para desenhar o mapa
+
+        Args:
+            latitude (float): Latitude
+            longitude (float): Longitude
+
+        Returns:
+            _type_: Mapa desenhado
+        """
         return folium.Map(location=[latitude, longitude], zoom_start=14)
 
     def _desenhar_linha(self, ponto_inicial: List, ponto_final: List, cor: str):
+        """Médodo para desenhar o trajeto
+
+        Args:
+            ponto_inicial (List): Um ponto com latitude e longitude
+            ponto_final (List): Um ponto com latitude e longitude
+            cor (str): Uma cor
+
+        Returns:
+            _type_: Linha desenhada
+        """
         return folium.PolyLine(locations=[ponto_inicial, ponto_final], color=f'#{cor}')
 
     def _marcador_mapa(self, latitude: float, longitude: float, popup: str, icon: Tuple):
+        """Desenha os marcadores do mapa
+
+        Args:
+            latitude (float): Recebe a latitude
+            longitude (float): Recebe a longitude
+            popup (str): texto simples
+            icon (Tuple): Icone com cor texto
+
+        Returns:
+            _type_: Marcador
+        """
         return folium.Marker([latitude, longitude],
                              popup=popup,
                              icon=folium.Icon(icon=icon[0], prefix=icon[1], color=icon[2]))
 
     def _salvar_mapa(self, nome_arquivo_mapa: str):
+        """Salva o mapa em um diretório
+
+        Args:
+            nome_arquivo_mapa (str): nome do arquivo do mapa
+        """
         self._mapa.save(os.getcwd() + '\\mapas_html\\' + nome_arquivo_mapa)
 
     def criar_mapa_posicao(self, linhas: Linha):
+
         pv = PosicaoVeiculo()
         ps = ParadaService()
 
@@ -67,6 +105,11 @@ class Mapa:
         self._salvar_mapa('mapa_linha.html')
 
     def criar_mapa_paradas(self, paradas: List[Parada]):
+        """ Cria o mapa com as paradas
+
+        Args:
+            paradas (List[Parada]): Lista de paradas 
+        """
         self._mapa = self._criar_mapa(
             paradas[0].posicao.latitude, paradas[0].posicao.longitude)
         icon = ('bus', 'fa', 'red')
@@ -76,6 +119,14 @@ class Mapa:
         self._salvar_mapa('mapa_previsao.html')
 
     def criar_mapa_previsao_parada(self, lista_paradas: List[Parada]):
+        """Cria os mapas de paradas
+
+        Args:
+            lista_paradas (List[Parada]): Uma lista de parada
+
+        Returns:
+            _type_: o mapa criado
+        """
         marcadores_parada = [
             dl.Marker(
                 dl.Tooltip(parada.nome_parada),

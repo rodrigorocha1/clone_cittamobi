@@ -18,10 +18,19 @@ class LayoutParadaEndereco:
 
     def __init__(self):
 
+
         self.tela = self._get_layout()
         self._calbacks_previsao()
 
     def _gerar_diferenca_minutos(self, hora_str: str) -> int:
+        """_summary_
+
+        Args:
+            hora_str (str): hora da previsão
+
+        Returns:
+            int: minutos correspondentes
+        """
         hora1 = datetime.datetime.strptime(self._hora_atual, '%H:%M').time()
         hora2 = datetime.datetime.strptime(hora_str, '%H:%M').time()
         diferenca = datetime.datetime.combine(datetime.date.today(
@@ -31,6 +40,7 @@ class LayoutParadaEndereco:
         return diferenca_minutos
 
     def _gerar_previsoes_linha(self, linha_previsao_parada: Linha):
+     
 
         linhas = html.Div(
             [

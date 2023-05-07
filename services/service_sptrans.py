@@ -8,6 +8,11 @@ class ServiceSPTRANS(ABC):
         self._sptrans_api = ServiceSPTRANSAPI()
 
     def _login(self) -> bool:
+        """Médodo de login
+
+        Returns:
+            bool: retorna true ou false
+        """
         path = '/Login/Autenticar?token='
         req = self._sptrans_api.requests_api(path)
         return req
@@ -28,5 +33,6 @@ if __name__ == '__main__':
     for parada in lista_paradas:
         print('lat', parada.posicao.latitude)
         print('lon', parada.posicao.longitude)
-        folium.Marker([parada.posicao.longitude, parada.posicao.latitude, ]).add_to(mapa_parada)
+        folium.Marker([parada.posicao.longitude, parada.posicao.latitude, ]).add_to(
+            mapa_parada)
     mapa_parada

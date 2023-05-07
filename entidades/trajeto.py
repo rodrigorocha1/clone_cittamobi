@@ -5,6 +5,7 @@ import os
 
 
 class Trajeto:
+
     _base_trips = pd.read_csv(
         os.getcwd() + '\\data\\raw\\trips.txt', usecols=['route_id', 'shape_id'])
     _base_shapes = pd.read_csv(os.getcwd() + '\\data\\raw\\shapes.txt',
@@ -15,6 +16,12 @@ class Trajeto:
         os.getcwd() + '\\data\\raw\\routes.txt', usecols=['route_id', 'route_color'])
 
     def __init__(self, nome_linha: str):
+        """_summary_
+
+        Args:
+            nome_linha (str): nome da linha que faz o traketo
+        """
+
         self.posicoes = self._obter_posicoes(nome_linha)
         self.cor = self._obter_cor_trajeto(nome_linha)
 

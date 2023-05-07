@@ -13,6 +13,8 @@ class LayoutMapaLinha:
 
     @staticmethod
     def __criar_arquivo():
+        """cria um arquivo ~fake~
+        """
         if not os.path.exists(os.getcwd() + '\\mapas_html\\mapa_linha.html'):
             with open(os.getcwd() + '\\mapas_html\\mapa_linha.html', 'w', encoding='utf-8') as f:
                 f.write('')
@@ -71,6 +73,7 @@ class LayoutMapaLinha:
             Input('interval_component_previsao', 'n_intervals')
         )
         def gerar_mapa(linha: str, n_clicks, n_intervals):
+
             print(linha, n_clicks, n_intervals)
             if n_clicks is None and n_intervals == 0:
                 return dash.no_update

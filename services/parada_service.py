@@ -13,6 +13,14 @@ class ParadaService(ServiceSPTRANS):
         super().__init__()
 
     def buscar_paradas_por_linha(self, id_linha: int) -> List[Parada]:
+        """Método para buscar a parada através do código da linha
+
+        Args:
+            id_linha (int): codigo da linha
+
+        Returns:
+            List[Parada]: uma lista de paradas
+        """
         path = '/Parada/BuscarParadasPorLinha?codigoLinha=' + str(id_linha)
         if self._login():
             req = self._sptrans_api.requests_api(path, 'GET')
@@ -21,6 +29,14 @@ class ParadaService(ServiceSPTRANS):
             return lista_paradas
 
     def buscar_parada_endereco(self, endereco: str) -> List[Parada]:
+        """Método para buscar a parada com base no endereço
+
+        Args:
+            endereco (str): Endereço da parada
+
+        Returns:
+            List[Parada]: Lista de paradas 
+        """
         path = '/Parada/Buscar?termosBusca=' + endereco
         if self._login():
             req = self._sptrans_api.requests_api(path, 'GET')
@@ -29,6 +45,14 @@ class ParadaService(ServiceSPTRANS):
             return lista_parada
 
     def buscar_previsao_parada(self, codigo_parada: int) -> List[Linha]:
+        """Método para buscar a previsão através do código da parada
+
+        Args:
+            codigo_parada (int): código da parada
+
+        Returns:
+            List[Linha]: Lista de linhas
+        """
         lista_previsoes = []
         if self._login():
             path = '/Previsao/Parada?codigoParada=' + \
