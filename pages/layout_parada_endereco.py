@@ -131,9 +131,7 @@ class LayoutParadaEndereco:
                                 ),
                                 html.P(
                                     id='saida',
-                                    style={
-                                        'height': '60%'
-                                    }
+
                                 ),
                             ],
                             id='id_cards_previsoes',
@@ -204,8 +202,7 @@ class LayoutParadaEndereco:
                     dbc.Row(
                         self._gerar_cartao(parada),
                         id=f'id_linha_parada_{parada.codigo_parada}',
-                        class_name='class_linha_paradas',
-                        style={'margin-top': '10px'}
+                        class_name='class_linha_paradas'
                     ) for parada in lista_parada
 
                 ],

@@ -17,3 +17,16 @@
     margin-right: 20px;
 }
 
+.class_paradas {
+    line-height: 10px black;
+    width: 90%;
+}
+
+.class_linha_paradas {
+    margin-left: 10px;
+}
+
+#saida {
+    height: 55%;
+    margin-bottom: 10px;
+}
