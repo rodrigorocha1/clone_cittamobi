@@ -152,8 +152,10 @@ class LayoutParadaEndereco:
     def _calbacks_previsao(self):
         @callback(
             Output(component_id='teste_tempo', component_property='children'),
-            [Input(component_id='interval-component',
-                   component_property='n_intervals')]
+            [
+                Input(component_id='interval-component',
+                      component_property='n_intervals')
+            ]
         )
         def update_time(n):
             return 'Última atualização: ' + str(datetime.datetime.now().time().strftime('%H:%M'))
