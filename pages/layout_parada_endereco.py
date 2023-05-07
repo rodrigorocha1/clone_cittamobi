@@ -1,12 +1,11 @@
 import dash
 from dash import html, callback, Input, Output, State, dcc
 import dash_bootstrap_components as dbc
-from typing import List
 from services.parada_service import ParadaService
 from entidades.mapa import Mapa
 from entidades.parada import Parada
 from entidades.linhas import Linha
-from entidades.onibus import Onibus
+
 import datetime
 
 
@@ -104,8 +103,13 @@ class LayoutParadaEndereco:
                                 className="class_input_group_container",
                                 id='id-input-group-mapa-linha'
                             ),
-                            style={'margin-top': '10px'},
-                            width={'size': 7, 'offset': 2},
+                            style={
+                                'margin-top': '10px'
+                            },
+                            width={
+                                'size': 7,
+                                'offset': 2
+                            },
                             id='id_coluna_mapa',
                         )
                     ], id='id_linha_mapa_linha'
@@ -119,12 +123,18 @@ class LayoutParadaEndereco:
                         ),
                         dbc.Col(
                             [
-                                html.P(style={
-                                    'color': 'black'
-                                },
+                                html.P(
+                                    style={
+                                        'color': 'black'
+                                    },
                                     id='teste_tempo'
                                 ),
-                                html.P(id='saida'),
+                                html.P(
+                                    id='saida',
+                                    style={
+                                        'height': '60%'
+                                    }
+                                ),
                             ],
                             id='id_cards_previsoes',
                             md=4
@@ -202,7 +212,7 @@ class LayoutParadaEndereco:
                     'overflow-y': 'scroll',
                     'overflow-x': 'hidden',
 
-                    'height': '100%'
+                    'height': '50%'
                 },
                 id='id_main_div_paradas',
                 className='class_card_paradas'
